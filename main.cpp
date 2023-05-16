@@ -5,11 +5,21 @@
 // change this to int WINAPI WinMain() to avoid the console
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
 {
+<<<<<<< Updated upstream
     GLFWwindow* window;
     int windowSizeW = 640, windowSizeH = 480;
     // initialize the library
     if (!glfwInit())
         return -1;
+=======
+    // glfw: initialize and configure
+    // ------------------------------
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+>>>>>>> Stashed changes
 
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
     int count, windowWidth, windowHeight, monitorX, monitorY;
@@ -38,6 +48,11 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
 
     // make the window's context current
     glfwMakeContextCurrent(window);
+<<<<<<< Updated upstream
+=======
+    glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+>>>>>>> Stashed changes
 
     // reset the window hints to default
     glfwDefaultWindowHints();
@@ -57,6 +72,10 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
     while (!glfwWindowShouldClose(window))
     {
         // render
+<<<<<<< Updated upstream
+=======
+        // ------
+>>>>>>> Stashed changes
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
