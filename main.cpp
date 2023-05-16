@@ -20,7 +20,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"   FragColor = vec4(1.0f, 1.0f, 0.8f, 1.0f);\n"
 "}\n\0";
 
 int main()
@@ -38,8 +38,8 @@ int main()
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "HaiBooLang", nullptr, nullptr);
-	if (window == nullptr)
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -101,27 +101,26 @@ int main()
 	// ------------------------------------------------------------------
 	float firstTriangle[] = {
 		// 第一个三角形
-		0.5f, 0.5f, 0.0f,   // 右上角
-		0.5f, -0.5f, 0.0f,  // 右下角
-		-0.5f, 0.5f, 0.0f,  // 左上角
+		0.6f, 0.6f, 0.0f,   // 右上角
+		0.6f, -0.4f, 0.0f,  // 右下角
+		-0.4f, 0.6f, 0.0f,  // 左上角
 	};
 
 	float secondTriangle[] = {
 		// 第二个三角形
-		0.5f, -0.5f, 0.0f,  // 右下角
-		-0.5f, -0.5f, 0.0f, // 左下角
-		-0.5f, 0.5f, 0.0f   // 左上角
+		0.4f, -0.6f, 0.0f,  // 右下角
+		-0.6f, -0.6f, 0.0f, // 左下角
+		-0.6f, 0.4f, 0.0f   // 左上角
 	};
-
 	unsigned int VBOs[2], VAOs[2];
-	glGenVertexArrays(2, VAOs);	// we can also generate multiple VAOs or buffers at the same time
+	glGenVertexArrays(2, VAOs); // we can also generate multiple VAOs or buffers at the same time
 	glGenBuffers(2, VBOs);
 	// first triangle setup
 	// --------------------
 	glBindVertexArray(VAOs[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(firstTriangle), firstTriangle, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);	// Vertex attributes stay the same
 	glEnableVertexAttribArray(0);
 	// glBindVertexArray(0); // no need to unbind at all as we directly bind a different VAO the next few lines
 	// second triangle setup
@@ -135,8 +134,8 @@ int main()
 
 
 	// uncomment this call to draw in wireframe polygons.
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	// 
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -147,9 +146,10 @@ int main()
 
 		// render
 		// ------
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(153.0 / 255.0f, 204.0 / 255.0f, 255.0 / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glUseProgram(shaderProgram);
 		// draw first triangle using the data from the first VAO
 		glBindVertexArray(VAOs[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -165,9 +165,9 @@ int main()
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-    glDeleteVertexArrays(2, VAOs);
-    glDeleteBuffers(2, VBOs);
-    glDeleteProgram(shaderProgram);
+	glDeleteVertexArrays(2, VAOs);
+	glDeleteBuffers(2, VBOs);
+	glDeleteProgram(shaderProgram);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
