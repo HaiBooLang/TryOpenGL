@@ -46,3 +46,6 @@
 - [上帝视角看GPU（6）：光线跟踪流水线](https://www.bilibili.com/video/BV1AF41157Md)
 - [Games101+《入门精要》基础 1.4 纹理](https://zhuanlan.zhihu.com/p/366103244)
 
+### Other
+
+- [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)

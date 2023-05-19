@@ -23,6 +23,7 @@
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\shader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
