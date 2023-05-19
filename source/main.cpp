@@ -17,6 +17,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void showFPS(GLFWwindow* pWindow);
 
 // settings
 constexpr unsigned int SCR_WIDTH = 1600;
@@ -31,6 +32,10 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
+
+// fps
+int framesNumber = 0;
+float lastTime = 0.0f;
 
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -152,7 +157,7 @@ int CALLBACK WinMain(
 	// second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
 	unsigned int lightCubeVAO;
 	glGenVertexArrays(1, &lightCubeVAO);
-	
+
 	glBindVertexArray(lightCubeVAO);
 
 	// we only need to bind to the VBO (to link it with glVertexAttribPointer), no need to fill it; the VBO's data already contains all we need (it's already bound, but we do it again for educational purposes)
@@ -173,6 +178,9 @@ int CALLBACK WinMain(
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
+		// show fps in window title 
+		showFPS(window);
+
 		// input
 		// -----
 		processInput(window);
@@ -188,7 +196,7 @@ int CALLBACK WinMain(
 		lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		lightingShader.setVec3("lightPos", lightPos);
 
-		
+
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -289,4 +297,25 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+
+void showFPS(GLFWwindow* pWindow)
+{
+	// Measure speed
+	float currentTime = glfwGetTime();
+	float deltaTime = currentTime - lastTime;
+	framesNumber++;
+	if (deltaTime >= 0.6) { // If last cout was more than 1 sec ago
+		std::cout << 1000.0 / static_cast<float>(framesNumber) << std::endl;
+
+		float fps = static_cast<float>(framesNumber) / deltaTime;
+
+		std::stringstream ss;
+		ss << "HaiBooLang     " << "[ " << fps << " FPS ]";
+
+		glfwSetWindowTitle(pWindow, ss.str().c_str());
+
+		framesNumber = 0;
+		lastTime = currentTime;
+	}
 }
