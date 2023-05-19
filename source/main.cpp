@@ -68,6 +68,7 @@ int CALLBACK WinMain(
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	// glfwSwapInterval(0);
 	// glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
 
 	// tell GLFW to capture our mouse
