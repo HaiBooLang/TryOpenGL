@@ -26,6 +26,16 @@
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\shader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\texture\awesomeface.png" />
+    <Image Include="resource\texture\container.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\shader\colors.fs" />
+    <None Include="resource\shader\colors.vs" />
+    <None Include="resource\shader\light_cube.fs" />
+    <None Include="resource\shader\light_cube.vs" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

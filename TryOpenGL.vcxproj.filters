@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="资源文件\纹理">
+      <UniqueIdentifier>{61d5229e-a0fa-44a0-b297-7767bcfbf107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\着色器">
+      <UniqueIdentifier>{57ec71bd-1ca8-4769-8c1c-8eac898ca197}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -29,5 +35,27 @@
     <ClInclude Include="include\camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\texture\awesomeface.png">
+      <Filter>资源文件\纹理</Filter>
+    </Image>
+    <Image Include="resource\texture\container.jpg">
+      <Filter>资源文件\纹理</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\shader\colors.fs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\colors.vs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\light_cube.fs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\light_cube.vs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
   </ItemGroup>
 </Project>
