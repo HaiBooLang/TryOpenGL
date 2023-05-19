@@ -48,7 +48,7 @@ int CALLBACK WinMain(
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	// glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
 	// glfw window creation
 	// --------------------  
@@ -183,7 +183,7 @@ int CALLBACK WinMain(
 		lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-
+		
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
