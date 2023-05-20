@@ -176,11 +176,14 @@ int CALLBACK WinMain(
 	// load textures (we now use a utility function to keep the code more organized)
 	// -----------------------------------------------------------------------------
 	unsigned int diffuseMap = loadTexture(R"(resource/texture/container2.png)");
+	unsigned int specularMap = loadTexture(R"(resource/texture/container2_specular.png)");
+
 
 	// shader configuration
 	// --------------------
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
+	lightingShader.setInt("material.specular", 1);
 
 	// render loop
 	// -----------
@@ -219,8 +222,7 @@ int CALLBACK WinMain(
 		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		// material properties
-		lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
-		lightingShader.setFloat("material.shininess", 32.0f);
+		lightingShader.setFloat("material.shininess", 64.0f);
 
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -231,6 +233,13 @@ int CALLBACK WinMain(
 		// world transformation
 		glm::mat4 model = glm::mat4(1.0f);
 		lightingShader.setMat4("model", model);
+
+		// bind diffuse map
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, diffuseMap);
+		// bind specular map
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, specularMap);
 
 		// render the cube
 		glBindVertexArray(cubeVAO);
