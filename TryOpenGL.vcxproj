@@ -32,8 +32,8 @@
     <Image Include="resource\texture\container2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader\lighting_maps.fs" />
-    <None Include="resource\shader\lighting_maps.vs" />
+    <None Include="resource\shader\multiple_lights.fs" />
+    <None Include="resource\shader\multiple_lights.vs" />
     <None Include="resource\shader\light_cube.fs" />
     <None Include="resource\shader\light_cube.vs" />
   </ItemGroup>
