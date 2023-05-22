@@ -197,6 +197,7 @@ int CALLBACK WinMain(
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
 
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -226,16 +227,21 @@ int CALLBACK WinMain(
 
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.use();
-		lightingShader.setVec3("light.position", lightPos);
+		lightingShader.setVec3("light.position", camera.Position);
+		lightingShader.setVec3("light.direction", camera.Front);
+		lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
 		lightingShader.setVec3("viewPos", camera.Position);
 
 		// light properties
-		lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-		lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+		lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
+		// we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+		// each environment and lighting type requires some tweaking to get the best out of your environment.
+		lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
 		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 		lightingShader.setFloat("light.constant", 1.0f);
 		lightingShader.setFloat("light.linear", 0.09f);
 		lightingShader.setFloat("light.quadratic", 0.032f);
+
 
 		// material properties
 		lightingShader.setFloat("material.shininess", 64.0f);
@@ -275,17 +281,17 @@ int CALLBACK WinMain(
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-		// also draw the lamp object
-		lightCubeShader.use();
-		lightCubeShader.setMat4("projection", projection);
-		lightCubeShader.setMat4("view", view);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-		lightCubeShader.setMat4("model", model);
+		// again, a lamp object is weird when we only have a spot light, don't render the light object
+		// lightCubeShader.use();
+		// lightCubeShader.setMat4("projection", projection);
+		// lightCubeShader.setMat4("view", view);
+		// model = glm::mat4(1.0f);
+		// model = glm::translate(model, lightPos);
+		// model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+		// lightCubeShader.setMat4("model", model);
 
-		glBindVertexArray(lightCubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		// glBindVertexArray(lightCubeVAO);
+		// glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

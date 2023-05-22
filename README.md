@@ -49,3 +49,4 @@
 ### Other
 
 - [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)
+- [一文看懂ECS架构](https://zhuanlan.zhihu.com/p/618971664)
