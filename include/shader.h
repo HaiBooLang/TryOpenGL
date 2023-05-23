@@ -134,7 +134,72 @@ public:
     {
         glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
-
+    // ------------------------------------------------------------------------
+    void setDirLight(const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
+    {
+        setVec3("dirLight.direction", direction);
+        setVec3("dirLight.ambient", ambient);
+        setVec3("dirLight.diffuse", diffuse);
+        setVec3("dirLight.specular", specular);
+    }
+    // ------------------------------------------------------------------------
+    void setDirLight(const int index, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
+    {
+        setVec3("dirLight[" + std::to_string(index) + "].direction", direction);
+        setVec3("dirLight[" + std::to_string(index) + "].ambient", ambient);
+        setVec3("dirLight[" + std::to_string(index) + "].diffuse", diffuse);
+        setVec3("dirLight[" + std::to_string(index) + "].specular", specular);
+    }
+    // ------------------------------------------------------------------------
+    void setPointLight(const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic)
+    {
+        setVec3("pointLights.position", position);
+        setVec3("pointLights.ambient", ambient);
+        setVec3("pointLights.diffuse", diffuse);
+        setVec3("pointLights.specular", specular);
+        setFloat("pointLights.constant", constant);
+        setFloat("pointLights.linear", linear);
+        setFloat("pointLights.quadratic", quadratic);
+    }
+    // ------------------------------------------------------------------------
+    void setPointLight(const int index, const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic)
+    {
+        setVec3("pointLights[" + std::to_string(index) + "].position", position);
+        setVec3("pointLights[" + std::to_string(index) + "].ambient", ambient);
+        setVec3("pointLights[" + std::to_string(index) + "].diffuse", diffuse);
+        setVec3("pointLights[" + std::to_string(index) + "].specular", specular);
+        setFloat("pointLights[" + std::to_string(index) + "].constant", constant);
+        setFloat("pointLights[" + std::to_string(index) + "].linear", linear);
+        setFloat("pointLights[" + std::to_string(index) + "].quadratic", quadratic);
+    }
+    // ------------------------------------------------------------------------
+    void setSpotLight(const glm::vec3& position, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic, const float cutOff, const float outerCutOff)
+    {
+        setVec3("spotLight.position", position);
+        setVec3("spotLight.direction", direction);
+        setVec3("spotLight.ambient", ambient);
+        setVec3("spotLight.diffuse", diffuse);
+        setVec3("spotLight.specular", specular);
+        setFloat("spotLight.constant", constant);
+        setFloat("spotLight.linear", linear);
+        setFloat("spotLight.quadratic", quadratic);
+        setFloat("spotLight.cutOff", cutOff);
+        setFloat("spotLight.outerCutOff", outerCutOff);
+    }
+    // ------------------------------------------------------------------------
+    void setSpotLight(const int index, const glm::vec3& position, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic, const float cutOff, const float outerCutOff)
+    {
+        setVec3("spotLight[" + std::to_string(index) + "].position", position);
+        setVec3("spotLight[" + std::to_string(index) + "].direction", direction);
+        setVec3("spotLight[" + std::to_string(index) + "].ambient", ambient);
+        setVec3("spotLight[" + std::to_string(index) + "].diffuse", diffuse);
+        setVec3("spotLight[" + std::to_string(index) + "].specular", specular);
+        setFloat("spotLight[" + std::to_string(index) + "].constant", constant);
+        setFloat("spotLight[" + std::to_string(index) + "].linear", linear);
+        setFloat("spotLight[" + std::to_string(index) + "].quadratic", quadratic);
+        setFloat("spotLight[" + std::to_string(index) + "].cutOff", cutOff);
+        setFloat("spotLight[" + std::to_string(index) + "].outerCutOff", outerCutOff);
+    }
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------

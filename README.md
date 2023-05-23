@@ -19,6 +19,11 @@
 - [OpenGL ES 着色器语言](https://mp.weixin.qq.com/s/qWr999OHV6s3wIVbuZjqwQ)
 - [RenderDemo（1）：用 OpenGL 画一个三角形 (安卓 | 苹果)](https://mp.weixin.qq.com/s/b-nFCBMf-oaayyG8a86mgw) 
 
+#### LearnOpenGL
+
+- [LearnOpenGL学习（二 VS Assimp安装与集成遇到的问题）](https://zhuanlan.zhihu.com/p/539375282)
+- [LearnOpenGL 模型加载—模型(二 绘制模型)](https://blog.csdn.net/xiji333/article/details/115271048)
+
 ### Unity C#
 
 - [Catlike](https://catlikecoding.com/unity/tutorials/)

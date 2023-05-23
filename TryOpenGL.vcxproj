@@ -24,18 +24,42 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
+    <ClInclude Include="include\mesh.h" />
+    <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\model\nanosuit\arm_dif.png" />
+    <Image Include="resource\model\nanosuit\arm_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\arm_showroom_spec.png" />
+    <Image Include="resource\model\nanosuit\body_dif.png" />
+    <Image Include="resource\model\nanosuit\body_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\body_showroom_spec.png" />
+    <Image Include="resource\model\nanosuit\glass_ddn.png" />
+    <Image Include="resource\model\nanosuit\glass_dif.png" />
+    <Image Include="resource\model\nanosuit\hand_dif.png" />
+    <Image Include="resource\model\nanosuit\hand_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\hand_showroom_spec.png" />
+    <Image Include="resource\model\nanosuit\helmet_diff.png" />
+    <Image Include="resource\model\nanosuit\helmet_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\helmet_showroom_spec.png" />
+    <Image Include="resource\model\nanosuit\leg_dif.png" />
+    <Image Include="resource\model\nanosuit\leg_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\leg_showroom_spec.png" />
     <Image Include="resource\texture\awesomeface.png" />
     <Image Include="resource\texture\container.jpg" />
     <Image Include="resource\texture\container2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader\multiple_lights.fs" />
-    <None Include="resource\shader\multiple_lights.vs" />
+    <None Include="resource\model\nanosuit\nanosuit.blend" />
+    <None Include="resource\model\nanosuit\nanosuit.mtl" />
+    <None Include="resource\shader\model_loading.fs" />
+    <None Include="resource\shader\model_loading.vs" />
     <None Include="resource\shader\light_cube.fs" />
     <None Include="resource\shader\light_cube.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\model\nanosuit\LICENSE.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -105,11 +129,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,11 +159,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
