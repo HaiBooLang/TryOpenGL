@@ -88,6 +88,9 @@ public:
             break;
         case UP:
             Position += WorldUp * velocity;
+            break;
+        case DOWN:
+            Position -= WorldUp * velocity;
         default:
             break;
         }
