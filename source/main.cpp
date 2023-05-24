@@ -60,7 +60,7 @@ int CALLBACK WinMain(
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	// glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
 	// glfw window creation
 	// --------------------  
@@ -75,7 +75,7 @@ int CALLBACK WinMain(
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-	glfwSwapInterval(0);
+	// glfwSwapInterval(0);
 	// glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
 
 	// tell GLFW to capture our mouse
@@ -95,26 +95,103 @@ int CALLBACK WinMain(
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_ALWAYS); // always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader JustShader(R"(resource\shader\model_loading.vs)", R"(resource\shader\model_loading.fs)");
+	Shader shader(R"(resource\shader\model_loading.vs)", R"(resource\shader\model_loading.fs)");
 	// Shader lightCubeShader(R"(resource\shader\light_cube.vs)", R"(resource\shader\light_cube.fs)");
 
-	// load models
-	// -----------
-	Model justModel(R"(resource\model\nanosuit\nanosuit.obj)");
+   // set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float cubeVertices[] = {
+		// positions          // texture Coords
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-	// draw in wireframe
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-	glm::vec3 pointLightPositions[] = {
-		glm::vec3(0.7f,  0.2f,  2.0f),
-		glm::vec3(2.3f, -3.3f, -4.0f),
-		glm::vec3(-4.0f,  2.0f, -12.0f),
-		glm::vec3(0.0f,  0.0f, -3.0f)
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
+	float planeVertices[] = {
+		// positions          // texture Coords (note we set these higher than 1 (together with GL_REPEAT as texture wrapping mode). this will cause the floor texture to repeat)
+		 5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+		-5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
+		-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
 
+		 5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+		-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+		 5.0f, -0.5f, -5.0f,  2.0f, 2.0f
+	};
+	// cube VAO
+	unsigned int cubeVAO, cubeVBO;
+	glGenVertexArrays(1, &cubeVAO);
+	glGenBuffers(1, &cubeVBO);
+	glBindVertexArray(cubeVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glBindVertexArray(0);
+	// plane VAO
+	unsigned int planeVAO, planeVBO;
+	glGenVertexArrays(1, &planeVAO);
+	glGenBuffers(1, &planeVBO);
+	glBindVertexArray(planeVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), &planeVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glBindVertexArray(0);
+
+	// load textures
+// -------------
+	unsigned int cubeTexture = loadTexture(R"(resource/texture/marble.jpg)");
+	unsigned int floorTexture = loadTexture(R"(resource/texture/metal.png)");
+
+	// shader configuration
+	// --------------------
+	shader.use();
+	shader.setInt("texture1", 0);
 
 	// render loop
 	// -----------
@@ -135,68 +212,38 @@ int CALLBACK WinMain(
 
 		// render
 		// ------
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
-		JustShader.use();
-		JustShader.setVec3("viewPos", camera.Position);
-		JustShader.setFloat("material.shininess", 64.0f);
-		
-		/*
-			Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
-			the proper PointLight struct in the array to set each uniform variable. This can be done more code-friendly
-			by defining light types as classes and set their values in there, or by using a more efficient uniform approach
-			by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
-		*/
-		// directional light
-		JustShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3(0.5f, 0.5f, 0.5f));
-		// point light 1
-		JustShader.setPointLight(0, pointLightPositions[0], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-		// point light 2
-		JustShader.setPointLight(1, pointLightPositions[1], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-		// point light 3
-		JustShader.setPointLight(2, pointLightPositions[2], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-		// point light 4
-		JustShader.setPointLight(3, pointLightPositions[3], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-
-		// spotLight
-		JustShader.setSpotLight(camera.Position, camera.Front, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(2.0f, 2.0f, 2.0f), 1.0f, 0.09f, 0.032f, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
-
-		// don't forget to enable shader before setting uniforms
-		// JustShader.use();
-
-		// view/projection transformations
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		JustShader.setMat4("projection", projection);
-		JustShader.setMat4("view", view);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		// render the loaded model
+		shader.use();
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		JustShader.setMat4("model", model);
-		justModel.Draw(JustShader);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glm::mat4 view = camera.GetViewMatrix();
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		shader.setMat4("view", view);
+		shader.setMat4("projection", projection);
+		// cubes
+		glBindVertexArray(cubeVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, cubeTexture);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+		shader.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		model = glm::mat4(1.0f);
-		
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		JustShader.setMat4("model", model);
-		justModel.Draw(JustShader);
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		// floor
+		glBindVertexArray(planeVAO);
+		glBindTexture(GL_TEXTURE_2D, floorTexture);
+		shader.setMat4("model", glm::mat4(1.0f));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
-	// glfw: terminate, clearing all previously allocated GLFW resources.
-	// ------------------------------------------------------------------
-	glfwTerminate();
-	return 0;
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly

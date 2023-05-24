@@ -23,7 +23,7 @@
       <UniqueIdentifier>{ca023672-c317-41ff-8899-f91aecdfa97d}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\外部源文件">
-      <UniqueIdentifier>{938a651f-57f6-4d34-90c8-15e36e8efae8}</UniqueIdentifier>
+      <UniqueIdentifier>{a0309f88-7564-4cd3-8aa3-d10fc3f1a8a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +108,12 @@
     </Image>
     <Image Include="resource\model\nanosuit\leg_showroom_spec.png">
       <Filter>资源文件\模型</Filter>
+    </Image>
+    <Image Include="resource\texture\marble.jpg">
+      <Filter>资源文件\纹理</Filter>
+    </Image>
+    <Image Include="resource\texture\metal.png">
+      <Filter>资源文件\纹理</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

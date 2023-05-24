@@ -49,6 +49,8 @@
     <Image Include="resource\texture\awesomeface.png" />
     <Image Include="resource\texture\container.jpg" />
     <Image Include="resource\texture\container2.png" />
+    <Image Include="resource\texture\marble.jpg" />
+    <Image Include="resource\texture\metal.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.blend" />
