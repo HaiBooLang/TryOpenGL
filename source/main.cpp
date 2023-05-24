@@ -229,7 +229,7 @@ int CALLBACK WinMain(
 
 	// load textures
 // -------------
-	unsigned int cubeTexture = loadTexture(R"(resource\texture\marble.jpg)");
+	unsigned int cubeTexture = loadTexture(R"(resource\texture\container.jpg)");
 	unsigned int floorTexture = loadTexture(R"(resource\texture\metal.png)");
 	unsigned int transparentTexture = loadTexture(R"(resource\texture\blending_transparent_window.png)");
 
