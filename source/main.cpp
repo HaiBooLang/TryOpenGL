@@ -39,20 +39,7 @@ float lastFrame = 0.0f;
 int framesNumber = 0;
 float lastTime = 0.0f;
 
-// lighting
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-
-// cube color
-constexpr float cubeR = 1.0f;
-constexpr float cubeG = 1.0f;
-constexpr float cubeB = 1.0f;
-
-int CALLBACK WinMain(
-	_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nShowCmd
-)
+int main()
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -60,7 +47,7 @@ int CALLBACK WinMain(
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
 	// glfw window creation
 	// --------------------  
@@ -95,12 +82,15 @@ int CALLBACK WinMain(
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-	// glDepthFunc(GL_ALWAYS); // always pass the depth test (same effect as glDisable(GL_DEPTH_TEST))
+	glDepthFunc(GL_LESS);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader shader(R"(resource\shader\model_loading.vs)", R"(resource\shader\model_loading.fs)");
-	// Shader lightCubeShader(R"(resource\shader\light_cube.vs)", R"(resource\shader\light_cube.fs)");
+	Shader shader(R"(resource\shader\stencil_testing.vs)", R"(resource\shader\stencil_testing.fs)");
+	Shader shaderSingleColor(R"(resource\shader\stencil_testing.vs)", R"(resource\shader\stencil_single_color.fs)");
 
    // set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -212,15 +202,34 @@ int CALLBACK WinMain(
 
 		// render
 		// ------
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
+		// set uniforms
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // also clear the depth buffer now!
 
-		shader.use();
+		shaderSingleColor.use();
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		shaderSingleColor.setMat4("view", view);
+		shaderSingleColor.setMat4("projection", projection);
+
+		shader.use();
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
+
+		// draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. We set its mask to 0x00 to not write to the stencil buffer.
+		glStencilMask(0x00);
+		// floor
+		glBindVertexArray(planeVAO);
+		glBindTexture(GL_TEXTURE_2D, floorTexture);
+		shader.setMat4("model", glm::mat4(1.0f));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+
+		// 1st. render pass, draw objects as normal, writing to the stencil buffer
+		// --------------------------------------------------------------------
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glStencilMask(0xFF);
 		// cubes
 		glBindVertexArray(cubeVAO);
 		glActiveTexture(GL_TEXTURE0);
@@ -232,18 +241,49 @@ int CALLBACK WinMain(
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		shader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		// floor
-		glBindVertexArray(planeVAO);
-		glBindTexture(GL_TEXTURE_2D, floorTexture);
-		shader.setMat4("model", glm::mat4(1.0f));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// 2nd. render pass: now draw slightly scaled versions of the objects, this time disabling stencil writing.
+		// Because the stencil buffer is now filled with several 1s. The parts of the buffer that are 1 are not drawn, thus only drawing 
+		// the objects' size differences, making it look like borders.
+		// -----------------------------------------------------------------------------------------------------------------------------
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		glStencilMask(0x00);
+		glDisable(GL_DEPTH_TEST);
+		shaderSingleColor.use();
+		float scale = 1.05f;
+		// cubes
+		glBindVertexArray(cubeVAO);
+		glBindTexture(GL_TEXTURE_2D, cubeTexture);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+		model = glm::scale(model, glm::vec3(scale, scale, scale));
+		shaderSingleColor.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(scale, scale, scale));
+		shaderSingleColor.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
+		glStencilMask(0xFF);
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		glEnable(GL_DEPTH_TEST);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	// optional: de-allocate all resources once they've outlived their purpose:
+	// ------------------------------------------------------------------------
+	glDeleteVertexArrays(1, &cubeVAO);
+	glDeleteVertexArrays(1, &planeVAO);
+	glDeleteBuffers(1, &cubeVBO);
+	glDeleteBuffers(1, &planeVBO);
+
+	glfwTerminate();
+	return 0;
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly

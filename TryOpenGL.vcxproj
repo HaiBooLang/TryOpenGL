@@ -55,10 +55,9 @@
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.blend" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
-    <None Include="resource\shader\model_loading.fs" />
-    <None Include="resource\shader\model_loading.vs" />
-    <None Include="resource\shader\light_cube.fs" />
-    <None Include="resource\shader\light_cube.vs" />
+    <None Include="resource\shader\stencil_single_color.fs" />
+    <None Include="resource\shader\stencil_testing.fs" />
+    <None Include="resource\shader\stencil_testing.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\model\nanosuit\LICENSE.txt" />
