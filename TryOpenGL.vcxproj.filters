@@ -115,25 +115,31 @@
     <Image Include="resource\texture\metal.png">
       <Filter>资源文件\纹理</Filter>
     </Image>
+    <Image Include="resource\texture\blending_transparent_window.png">
+      <Filter>资源文件\纹理</Filter>
+    </Image>
+    <Image Include="resource\texture\grass.png">
+      <Filter>资源文件\纹理</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader\model_loading.fs">
-      <Filter>资源文件\着色器</Filter>
-    </None>
-    <None Include="resource\shader\model_loading.vs">
-      <Filter>资源文件\着色器</Filter>
-    </None>
-    <None Include="resource\shader\light_cube.fs">
-      <Filter>资源文件\着色器</Filter>
-    </None>
-    <None Include="resource\shader\light_cube.vs">
-      <Filter>资源文件\着色器</Filter>
-    </None>
     <None Include="resource\model\nanosuit\nanosuit.blend">
       <Filter>资源文件\模型</Filter>
     </None>
     <None Include="resource\model\nanosuit\nanosuit.mtl">
       <Filter>资源文件\模型</Filter>
+    </None>
+    <None Include="resource\shader\framebuffers.fs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\framebuffers.vs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\framebuffers_screen.fs">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="resource\shader\framebuffers_screen.vs">
+      <Filter>资源文件\着色器</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -57,8 +57,10 @@
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.blend" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
-    <None Include="resource\shader\stencil_testing.fs" />
-    <None Include="resource\shader\stencil_testing.vs" />
+    <None Include="resource\shader\framebuffers.fs" />
+    <None Include="resource\shader\framebuffers.vs" />
+    <None Include="resource\shader\framebuffers_screen.fs" />
+    <None Include="resource\shader\framebuffers_screen.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\model\nanosuit\LICENSE.txt" />
