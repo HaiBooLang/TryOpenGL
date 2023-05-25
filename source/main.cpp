@@ -47,12 +47,7 @@ constexpr float cubeR = 1.0f;
 constexpr float cubeG = 1.0f;
 constexpr float cubeB = 1.0f;
 
-int CALLBACK WinMain(
-	_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nShowCmd
-)
+int main()
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -116,6 +111,13 @@ int CALLBACK WinMain(
 		glm::vec3(0.0f,  0.0f, -3.0f)
 	};
 
+	// uniform buffer
+	unsigned int uboTransformMatrices;
+	glGenBuffers(1, &uboTransformMatrices);
+	glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
+	glBufferData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboTransformMatrices, 0, 3 * sizeof(glm::mat4));
 
 	// render loop
 	// -----------
@@ -165,17 +167,27 @@ int CALLBACK WinMain(
 		JustShader.setSpotLight(camera.Position, camera.Front, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(2.0f, 2.0f, 2.0f), 1.0f, 0.09f, 0.032f, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
 
 		// view/projection transformations
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		JustShader.setMat4("projection", projection);
-		JustShader.setMat4("view", view);
+
+		// JustShader.setMat4("projection", projection);
+		// JustShader.setMat4("view", view);
 		
+
+
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		// render the loaded model
+		
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		JustShader.setMat4("model", model);
+		
+		glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
+
+		// JustShader.setMat4("model", model);
 		justModel.Draw(JustShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
