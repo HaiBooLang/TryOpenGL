@@ -135,10 +135,10 @@
     <None Include="resource\shader\framebuffers.vs">
       <Filter>资源文件\着色器</Filter>
     </None>
-    <None Include="resource\shader\framebuffers_screen.fs">
+    <None Include="resource\shader\skybox.fs">
       <Filter>资源文件\着色器</Filter>
     </None>
-    <None Include="resource\shader\framebuffers_screen.vs">
+    <None Include="resource\shader\skybox.vs">
       <Filter>资源文件\着色器</Filter>
     </None>
   </ItemGroup>

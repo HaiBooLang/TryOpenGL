@@ -59,8 +59,8 @@
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
     <None Include="resource\shader\framebuffers.fs" />
     <None Include="resource\shader\framebuffers.vs" />
-    <None Include="resource\shader\framebuffers_screen.fs" />
-    <None Include="resource\shader\framebuffers_screen.vs" />
+    <None Include="resource\shader\skybox.fs" />
+    <None Include="resource\shader\skybox.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\model\nanosuit\LICENSE.txt" />
