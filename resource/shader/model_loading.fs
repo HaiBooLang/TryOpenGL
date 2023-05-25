@@ -52,6 +52,7 @@ in vec2 TexCoords;
 #define NR_POINT_LIGHTS 4
 
 uniform vec3 viewPos;
+uniform samplerCube skybox;
 uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLight;
@@ -87,7 +88,15 @@ void main()
     // phase 3: spot light
     result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
     
-    FragColor = vec4(result, 1.0);
+    vec3 I = normalize(FragPos - viewPos);
+    vec3 R = reflect(I, normalize(Normal));
+    // result += vec3(texture(skybox, R).rgb);
+    //vec3 I = normalize(FragPos - viewPos);
+    //vec3 R = reflect(I, normalize(norm));
+
+    //result += vec3(texture(skybox, R).rgb) / 2.0;
+
+    FragColor = vec4(vec3(texture(skybox, R).rgb) - result, 1.0);
 }
 
 // calculates the color when using a directional light.

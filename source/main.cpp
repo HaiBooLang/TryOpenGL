@@ -85,8 +85,7 @@ int main()
 		return -1;
 	}
 
-	// tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
-	// stbi_set_flip_vertically_on_load(true);
+
 
 	// configure global opengl state
 	// -----------------------------
@@ -188,6 +187,14 @@ int main()
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboTransformMatrices, 0, 3 * sizeof(glm::mat4));
 
+	// shader configuration
+	// --------------------
+	modelShader.use();
+	modelShader.setInt("skybox", 0);
+
+	skyboxShader.use();
+	skyboxShader.setInt("skybox", 0);
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -226,6 +233,7 @@ int main()
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
 		modelShader.setVec3("viewPos", camera.Position);
+		modelShader.setVec3("cameraPos", camera.Position);
 		modelShader.setFloat("material.shininess", 64.0f);
 		
 		/*
@@ -252,20 +260,24 @@ int main()
 		
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
 		justModel.Draw(modelShader);
 
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		glBindVertexArray(0);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 		model = glm::mat4(1.0f);		
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelShader.setMat4("model", model);
+		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
 		justModel.Draw(modelShader);
 
 
-		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		// draw skybox as last
 		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
