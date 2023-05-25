@@ -124,7 +124,7 @@ inline void Mesh::setupMesh()
 	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
 
 	// unbind VAO
-	glBindVertexArray(0);
+	glEnableVertexAttribArray(0);
 }
 
 inline void Mesh::Draw(Shader& shader)

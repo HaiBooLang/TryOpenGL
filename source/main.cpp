@@ -10,6 +10,7 @@
 #include <shader.h>
 #include <model.h>
 #include <camera.h>
+#include <skybox.h>
 
 #include <Windows.h>
 #include <iostream>
@@ -95,7 +96,7 @@ int main()
 	// build and compile our shader program
 	// ------------------------------------
 	Shader modelShader(R"(resource\shader\model_loading.vs)", R"(resource\shader\model_loading.fs)");
-	Shader skyboxShader(R"(resource\shader\skybox.vs)", R"(resource\shader\skybox.fs)");
+	
 	// Shader lightCubeShader(R"(resource\shader\light_cube.vs)", R"(resource\shader\light_cube.fs)");
 
 	// load models
@@ -112,60 +113,7 @@ int main()
 		glm::vec3(0.0f,  0.0f, -3.0f)
 	};
 
-	float skyboxVertices[] = {
-		// positions          
-		-1.0f,  1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-
-		-1.0f, -1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
-
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f
-	};
-
-	// skybox VAO
-	unsigned int skyboxVAO, skyboxVBO;
-	glGenVertexArrays(1, &skyboxVAO);
-	glGenBuffers(1, &skyboxVBO);
-	glBindVertexArray(skyboxVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 	vector<std::string> faces
 	{
@@ -176,7 +124,9 @@ int main()
 		R"(resource\texture\skybox\front.jpg)",
 		R"(resource\texture\skybox\back.jpg)"
 	};
-	unsigned int cubemapTexture = loadCubemap(faces);
+	Skybox skybox(faces, R"(resource\shader\skybox.vs)", R"(resource\shader\skybox.fs)");
+
+	unsigned int cubemapTexture = skybox.cubemapTexture();
 
 
 	// uniform buffer
@@ -192,8 +142,7 @@ int main()
 	modelShader.use();
 	modelShader.setInt("skybox", 0);
 
-	skyboxShader.use();
-	skyboxShader.setInt("skybox", 0);
+
 
 	// render loop
 	// -----------
@@ -233,7 +182,6 @@ int main()
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
 		modelShader.setVec3("viewPos", camera.Position);
-		modelShader.setVec3("cameraPos", camera.Position);
 		modelShader.setFloat("material.shininess", 64.0f);
 		
 		/*
@@ -279,19 +227,12 @@ int main()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		// draw skybox as last
-		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-		skyboxShader.use();
+
+
+		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-		skyboxShader.setMat4("view", view);
-		skyboxShader.setMat4("projection", projection);
-		// skybox cube
-		glBindVertexArray(skyboxVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-		glDepthFunc(GL_LESS); // set depth function back to default
+
+		skybox.draw(projection,view);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -301,8 +242,7 @@ int main()
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, &skyboxVAO);
-	glDeleteBuffers(1, &skyboxVBO);
+
 	glDeleteBuffers(1, &uboTransformMatrices);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.

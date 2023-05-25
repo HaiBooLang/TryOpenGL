@@ -96,7 +96,7 @@ void main()
 
     //result += vec3(texture(skybox, R).rgb) / 2.0;
 
-    FragColor = vec4(vec3(texture(skybox, R).rgb) - result, 1.0);
+    FragColor = vec4(vec3(texture(skybox, R).rgb), 1.0);
 }
 
 // calculates the color when using a directional light.

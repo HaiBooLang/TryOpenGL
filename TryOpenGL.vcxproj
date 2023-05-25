@@ -27,6 +27,7 @@
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shader.h" />
+    <ClInclude Include="include\skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\model\nanosuit\arm_dif.png" />
