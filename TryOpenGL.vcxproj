@@ -49,14 +49,22 @@
     <Image Include="resource\texture\awesomeface.png" />
     <Image Include="resource\texture\container.jpg" />
     <Image Include="resource\texture\container2.png" />
+    <Image Include="resource\texture\skybox\back.jpg" />
+    <Image Include="resource\texture\skybox\bottom.jpg" />
+    <Image Include="resource\texture\skybox\front.jpg" />
+    <Image Include="resource\texture\skybox\left.jpg" />
+    <Image Include="resource\texture\skybox\right.jpg" />
+    <Image Include="resource\texture\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.blend" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
+    <None Include="resource\shader\light_cube.fs" />
     <None Include="resource\shader\model_loading.fs" />
     <None Include="resource\shader\model_loading.vs" />
-    <None Include="resource\shader\light_cube.fs" />
     <None Include="resource\shader\light_cube.vs" />
+    <None Include="resource\shader\skybox.fs" />
+    <None Include="resource\shader\skybox.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\model\nanosuit\LICENSE.txt" />
