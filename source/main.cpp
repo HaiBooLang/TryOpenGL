@@ -95,6 +95,7 @@ int CALLBACK WinMain(
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	// build and compile our shader program
 	// ------------------------------------
@@ -135,9 +136,10 @@ int CALLBACK WinMain(
 
 		// render
 		// ------
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
-
+		
+		// don't forget to enable shader before setting uniforms
 		JustShader.use();
 		JustShader.setVec3("viewPos", camera.Position);
 		JustShader.setFloat("material.shininess", 64.0f);
@@ -162,14 +164,12 @@ int CALLBACK WinMain(
 		// spotLight
 		JustShader.setSpotLight(camera.Position, camera.Front, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(2.0f, 2.0f, 2.0f), 1.0f, 0.09f, 0.032f, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
 
-		// don't forget to enable shader before setting uniforms
-		// JustShader.use();
-
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 		JustShader.setMat4("projection", projection);
 		JustShader.setMat4("view", view);
+		
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
@@ -178,9 +178,8 @@ int CALLBACK WinMain(
 		JustShader.setMat4("model", model);
 		justModel.Draw(JustShader);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		model = glm::mat4(1.0f);
-		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		model = glm::mat4(1.0f);		
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -302,8 +301,8 @@ unsigned int loadTexture(char const* path)
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
