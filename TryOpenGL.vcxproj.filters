@@ -25,6 +25,9 @@
     <Filter Include="源文件\外部源文件">
       <UniqueIdentifier>{a0309f88-7564-4cd3-8aa3-d10fc3f1a8a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\纹理\天空盒">
+      <UniqueIdentifier>{2c8f1063-5a5c-403b-a05f-1903b6f82fdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -120,6 +123,24 @@
     </Image>
     <Image Include="resource\texture\grass.png">
       <Filter>资源文件\纹理</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\back.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\bottom.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\front.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\left.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\right.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\top.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

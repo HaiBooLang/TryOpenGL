@@ -53,6 +53,12 @@
     <Image Include="resource\texture\grass.png" />
     <Image Include="resource\texture\marble.jpg" />
     <Image Include="resource\texture\metal.png" />
+    <Image Include="resource\texture\skybox\back.jpg" />
+    <Image Include="resource\texture\skybox\bottom.jpg" />
+    <Image Include="resource\texture\skybox\front.jpg" />
+    <Image Include="resource\texture\skybox\left.jpg" />
+    <Image Include="resource\texture\skybox\right.jpg" />
+    <Image Include="resource\texture\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.blend" />
