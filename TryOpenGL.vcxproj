@@ -32,24 +32,28 @@
   <ItemGroup>
     <Image Include="resource\model\nanosuit\arm_dif.png" />
     <Image Include="resource\model\nanosuit\arm_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\arm_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\arm_showroom_spec.png" />
     <Image Include="resource\model\nanosuit\body_dif.png" />
     <Image Include="resource\model\nanosuit\body_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\body_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\body_showroom_spec.png" />
     <Image Include="resource\model\nanosuit\glass_ddn.png" />
     <Image Include="resource\model\nanosuit\glass_dif.png" />
+    <Image Include="resource\model\nanosuit\glass_refl.png" />
     <Image Include="resource\model\nanosuit\hand_dif.png" />
     <Image Include="resource\model\nanosuit\hand_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\hand_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\hand_showroom_spec.png" />
     <Image Include="resource\model\nanosuit\helmet_diff.png" />
     <Image Include="resource\model\nanosuit\helmet_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\helmet_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\helmet_showroom_spec.png" />
     <Image Include="resource\model\nanosuit\leg_dif.png" />
     <Image Include="resource\model\nanosuit\leg_showroom_ddn.png" />
+    <Image Include="resource\model\nanosuit\leg_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\leg_showroom_spec.png" />
     <Image Include="resource\texture\awesomeface.png" />
-    <Image Include="resource\texture\container.jpg" />
-    <Image Include="resource\texture\container2.png" />
     <Image Include="resource\texture\skybox\back.jpg" />
     <Image Include="resource\texture\skybox\bottom.jpg" />
     <Image Include="resource\texture\skybox\front.jpg" />
@@ -58,7 +62,6 @@
     <Image Include="resource\texture\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\model\nanosuit\nanosuit.blend" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
     <None Include="resource\shader\light_cube.fs" />
     <None Include="resource\shader\model_loading.fs" />
@@ -66,9 +69,6 @@
     <None Include="resource\shader\light_cube.vs" />
     <None Include="resource\shader\skybox.fs" />
     <None Include="resource\shader\skybox.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resource\model\nanosuit\LICENSE.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

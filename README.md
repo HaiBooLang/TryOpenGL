@@ -18,15 +18,26 @@
 - [OpenGL 颜色混合](https://mp.weixin.qq.com/s/mpj8_i71wbswRPtJp2r4cw)
 - [OpenGL ES 着色器语言](https://mp.weixin.qq.com/s/qWr999OHV6s3wIVbuZjqwQ)
 - [RenderDemo（1）：用 OpenGL 画一个三角形 (安卓 | 苹果)](https://mp.weixin.qq.com/s/b-nFCBMf-oaayyG8a86mgw) 
+- [OpenGL VAO VBO EBO(IBO)的绑定、解绑问题](https://blog.csdn.net/xiji333/article/details/114934590)
 
 #### LearnOpenGL
 
 - [LearnOpenGL学习（二 VS Assimp安装与集成遇到的问题）](https://zhuanlan.zhihu.com/p/539375282)
 - [LearnOpenGL 模型加载—模型(二 绘制模型)](https://blog.csdn.net/xiji333/article/details/115271048)
 
+#### Shader
+
+- [致从没看懂过着色器代码的你 : 着色器天书浅引](http://zhangwenli.com/blog/2017/02/24/what-is-a-shader/)
+- [卡通渲染（上） : 着色器天书浅引](http://zhangwenli.com/blog/2017/03/05/cartoon-shading-1/)
+- [卡通渲染（下） : 着色器天书浅引](http://zhangwenli.com/blog/2017/03/21/cartoon-shading-2/)
+
 ### Unity C#
 
 - [Catlike](https://catlikecoding.com/unity/tutorials/)
+
+### UE5
+
+\- [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
 
 ### Windows
 
@@ -55,3 +66,4 @@
 
 - [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)
 - [一文看懂ECS架构](https://zhuanlan.zhihu.com/p/618971664)
+- [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)

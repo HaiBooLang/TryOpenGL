@@ -25,6 +25,21 @@
     <Filter Include="源文件\外部源文件">
       <UniqueIdentifier>{938a651f-57f6-4d34-90c8-15e36e8efae8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\纹理\天空盒">
+      <UniqueIdentifier>{1fb713f3-431b-4437-9fb2-b7f1f6e25096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\着色器\天空盒">
+      <UniqueIdentifier>{04347766-12e4-4c09-8649-3f8014c2c1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\着色器\模型">
+      <UniqueIdentifier>{5a0dd907-844c-43d4-97ad-edba39ab9192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\着色器\光源">
+      <UniqueIdentifier>{530d17f9-9653-4d6a-b024-e4a0eea0f796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\模型\nanosuit">
+      <UniqueIdentifier>{9278e2c6-afe2-4a83-b1b2-2c4d94431e05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -47,92 +62,123 @@
     <ClInclude Include="include\model.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\skybox.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\texture\awesomeface.png">
       <Filter>资源文件\纹理</Filter>
     </Image>
-    <Image Include="resource\texture\container.jpg">
-      <Filter>资源文件\纹理</Filter>
+    <Image Include="resource\texture\skybox\back.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
     </Image>
-    <Image Include="resource\texture\container2.png">
-      <Filter>资源文件\纹理</Filter>
+    <Image Include="resource\texture\skybox\bottom.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\front.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\left.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\right.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
+    </Image>
+    <Image Include="resource\texture\skybox\top.jpg">
+      <Filter>资源文件\纹理\天空盒</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\arm_dif.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\arm_showroom_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\arm_showroom_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\arm_showroom_spec.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\body_dif.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\body_showroom_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\body_showroom_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\body_showroom_spec.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\glass_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\glass_dif.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\glass_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\hand_dif.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\hand_showroom_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\hand_showroom_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\hand_showroom_spec.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\helmet_diff.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\helmet_showroom_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\helmet_showroom_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\helmet_showroom_spec.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\leg_dif.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\leg_showroom_ddn.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
+    </Image>
+    <Image Include="resource\model\nanosuit\leg_showroom_refl.png">
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\leg_showroom_spec.png">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader\model_loading.fs">
-      <Filter>资源文件\着色器</Filter>
+    <None Include="resource\shader\skybox.fs">
+      <Filter>资源文件\着色器\天空盒</Filter>
+    </None>
+    <None Include="resource\shader\skybox.vs">
+      <Filter>资源文件\着色器\天空盒</Filter>
     </None>
     <None Include="resource\shader\model_loading.vs">
-      <Filter>资源文件\着色器</Filter>
+      <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\light_cube.fs">
-      <Filter>资源文件\着色器</Filter>
+    <None Include="resource\shader\model_loading.fs">
+      <Filter>资源文件\着色器\模型</Filter>
     </None>
     <None Include="resource\shader\light_cube.vs">
-      <Filter>资源文件\着色器</Filter>
+      <Filter>资源文件\着色器\光源</Filter>
     </None>
-    <None Include="resource\model\nanosuit\nanosuit.blend">
-      <Filter>资源文件\模型</Filter>
+    <None Include="resource\shader\light_cube.fs">
+      <Filter>资源文件\着色器\光源</Filter>
     </None>
     <None Include="resource\model\nanosuit\nanosuit.mtl">
-      <Filter>资源文件\模型</Filter>
+      <Filter>资源文件\模型\nanosuit</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resource\model\nanosuit\LICENSE.txt">
-      <Filter>资源文件\模型</Filter>
-    </Text>
   </ItemGroup>
 </Project>
