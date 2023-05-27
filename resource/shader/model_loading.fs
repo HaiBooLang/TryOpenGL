@@ -5,8 +5,10 @@
 struct Material {
     sampler2D texture_diffuse[MAX_TEXTURE_NUM];
     sampler2D texture_specular[MAX_TEXTURE_NUM];
+    sampler2D texture_reflection[MAX_TEXTURE_NUM];
     int texture_diffuse_num;
     int texture_specular_num;
+    int texture_reflec8tion_num;
     float shininess;
 }; 
 
@@ -66,32 +68,27 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec);
 
 out vec4 FragColor;
+
 void main()
 {    
-  // properties
-    vec3 norm = normalize(Normal);
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 diffuse = vec3(0.0, 0.0, 0.0);
+    for(int i = 0; i < material.texture_diffuse_num; i++)
+    {
+        diffuse += texture(material.texture_diffuse[i], TexCoords).rgb;
+    }
 
-    // =======================================================
-    // Our lighting is set up in 3 phases: directional, point lights and an optional flashlight
-    // For each phase, a calculate function is defined that calculates the corresponding color
-    // per lamp. In the main() function we take all the calculated colors and sum them up for
-    // this fragment's final color.
-    // =======================================================
-    // phase 1: directional lighting
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec3 reflection = vec3(0.0, 0.0, 0.0);
+    for(int i = 0; i < material.texture_reflection_num; i++)
+    {
+        vec3 I = normalize(FragPos - viewPos);
+        vec3 R = reflect(I, normalize(Normal));
+        //float reflect_intensity = texture(material.texture_reflection[i], TexCoords).r;
+        //if(reflect_intensity > 0.1) // Only sample reflections when above a certain treshold
+            reflection += texture(skybox, R).rgb ;
+    }
 
-    // phase 2: point lights
-    for(int i = 0; i < NR_POINT_LIGHTS; i++)
-        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
-
-    // phase 3: spot light
-    result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
-    
-    vec3 I = normalize(FragPos - viewPos);
-    vec3 R = reflect(I, normalize(Normal));
-
-    FragColor = vec4(vec3(texture(skybox, R).rgb * result), 1.0);
+    // Combine them
+    FragColor = vec4(reflection, 1.0);
 }
 
 // calculates the color when using a directional light.
@@ -157,6 +154,8 @@ vec3 CalLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float
     {
         specular += texture(material.texture_specular[i], TexCoords).rgb;
     }
-    specular = lightSpecular * spec * specular;
+    vec3 I = normalize(FragPos - viewPos);
+    vec3 R = reflect(I, normalize(Normal));
+    specular *= vec3(texture(skybox, R).rgb);
     return ambient + diffuse + specular;
 }

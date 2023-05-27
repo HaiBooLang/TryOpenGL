@@ -134,6 +134,7 @@ inline void Mesh::Draw(Shader& shader)
 	unsigned int specularNr = 0;
 	unsigned int normalNr = 0;
 	unsigned int heightNr = 0;
+	unsigned int reflectionNr = 0;
 
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
@@ -151,6 +152,8 @@ inline void Mesh::Draw(Shader& shader)
 			number = std::to_string(normalNr++); // transfer unsigned int to string
 		else if (type == "texture_height")
 			number = std::to_string(heightNr++); // transfer unsigned int to string
+		else if (type == "texture_reflection")	// We'll now also need to add the code to set and bind to reflection textures
+			number = std::to_string(reflectionNr);
 
 		// now set the sampler to the correct texture unit
 		glUniform1i(glGetUniformLocation(shader.ID, ("material." + type + "[" + number + "]").c_str()), i);
@@ -161,7 +164,8 @@ inline void Mesh::Draw(Shader& shader)
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_specular_num"), specularNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_normal_num"), normalNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_height_num"), heightNr);
-	
+	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_reflection_num"), reflectionNr);
+
 	// draw mesh
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
