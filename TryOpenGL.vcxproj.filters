@@ -180,5 +180,11 @@
     <None Include="resource\model\nanosuit\nanosuit.mtl">
       <Filter>资源文件\模型\nanosuit</Filter>
     </None>
+    <None Include="resource\shader\point_model.vs">
+      <Filter>资源文件\着色器\模型</Filter>
+    </None>
+    <None Include="resource\shader\point_model.fs">
+      <Filter>资源文件\着色器\模型</Filter>
+    </None>
   </ItemGroup>
 </Project>

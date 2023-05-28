@@ -67,6 +67,8 @@
     <None Include="resource\shader\model_loading.fs" />
     <None Include="resource\shader\model_loading.vs" />
     <None Include="resource\shader\light_cube.vs" />
+    <None Include="resource\shader\point_model.fs" />
+    <None Include="resource\shader\point_model.vs" />
     <None Include="resource\shader\skybox.fs" />
     <None Include="resource\shader\skybox.vs" />
   </ItemGroup>

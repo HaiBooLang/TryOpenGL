@@ -48,7 +48,12 @@ constexpr float cubeR = 1.0f;
 constexpr float cubeG = 1.0f;
 constexpr float cubeB = 1.0f;
 
-int main()
+int CALLBACK WinMain(
+	_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPSTR lpCmdLine,
+	_In_ int nShowCmd
+)
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -89,11 +94,13 @@ int main()
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	// build and compile our shader program
 	// ------------------------------------
 	Shader modelShader(R"(resource\shader\model_loading.vs)", R"(resource\shader\model_loading.fs)");
-	
+	Shader pointModelShader(R"(resource\shader\point_model.vs)", R"(resource\shader\point_model.fs)");
+
 	// Shader lightCubeShader(R"(resource\shader\light_cube.vs)", R"(resource\shader\light_cube.fs)");
 
 	// load models
@@ -134,7 +141,7 @@ int main()
 	// shader configuration
 	// --------------------
 	modelShader.use();
-	modelShader.setInt("skybox", 4);
+	modelShader.setInt("skybox", 5);
 
 
 	// render loop
@@ -197,11 +204,12 @@ int main()
 		// spotLight
 		modelShader.setSpotLight(camera.Position, camera.Front, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(2.0f, 2.0f, 2.0f), 1.0f, 0.09f, 0.032f, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
 		
-		glActiveTexture(GL_TEXTURE4);
+		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		justModel.Draw(modelShader);
+
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		model = glm::mat4(1.0f);		
@@ -209,7 +217,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
-		justModel.Draw(modelShader);
+		justModel.Draw(pointModelShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix

@@ -10,6 +10,8 @@
 
 #include <string>
 #include <vector>
+#include <limits>
+
 using std::string, std::vector;
 
 #define MAX_BONE_INFLUENCE 4
@@ -45,11 +47,17 @@ public:
 	vector<Texture>      textures;
 
 	unsigned int VAO;
+
 	// constructor
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(const vector<Vertex>& vertices, const vector<unsigned int>& indices, const vector<Texture>& textures)
+		:vertices(vertices), indices(indices), textures(textures)
+	{
+		// now that we have all the required data, set the vertex buffers and its attribute pointers.
+		setupMesh();
+	}
 
 	// render the mesh
-	void Draw(Shader& shader);
+	void Draw(Shader& shader) const;
 
 private:
 	// render data 
@@ -59,18 +67,7 @@ private:
 	void setupMesh();
 };
 
-inline Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
-	:vertices(vertices), indices(indices), textures(textures)
-{	
-	float maxZ = -1.0f;
-	for (const auto& vertex : vertices)
-	{
-		if (vertex.Position.z > maxZ)
-			maxZ = vertex.Position.z;
-	}
-	// now that we have all the required data, set the vertex buffers and its attribute pointers.
-	setupMesh();
-}
+
 
 inline void Mesh::setupMesh()
 {
@@ -83,7 +80,7 @@ inline void Mesh::setupMesh()
 	// Any subsequent VBO, EBO, glVertexAttribPointer and glEnableVertexAttribArray
 	// calls will be stored inside the VAO currently bound.
 	glBindVertexArray(VAO);
-	
+
 	// load data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// A great thing about structs is that their memory layout is sequential for all its items.
@@ -127,7 +124,7 @@ inline void Mesh::setupMesh()
 	glEnableVertexAttribArray(0);
 }
 
-inline void Mesh::Draw(Shader& shader)
+inline void Mesh::Draw(Shader& shader) const
 {
 	// bind appropriate textures
 	unsigned int diffuseNr = 0;
@@ -140,10 +137,11 @@ inline void Mesh::Draw(Shader& shader)
 	{
 		// active proper texture unit before binding
 		// binding multiple textures for a single drawing call
-		glActiveTexture(GL_TEXTURE0 + i); 
+		glActiveTexture(GL_TEXTURE0 + i);
 		// retrieve texture number (the N in diffuse_textureN)
 		string number;
 		string type = textures[i].type;
+
 		if (type == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
 		else if (type == "texture_specular")
@@ -153,7 +151,7 @@ inline void Mesh::Draw(Shader& shader)
 		else if (type == "texture_height")
 			number = std::to_string(heightNr++); // transfer unsigned int to string
 		else if (type == "texture_reflection")	// We'll now also need to add the code to set and bind to reflection textures
-			number = std::to_string(reflectionNr);
+			number = std::to_string(reflectionNr++);
 
 		// now set the sampler to the correct texture unit
 		glUniform1i(glGetUniformLocation(shader.ID, ("material." + type + "[" + number + "]").c_str()), i);
@@ -162,9 +160,8 @@ inline void Mesh::Draw(Shader& shader)
 	}
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_diffuse_num"), diffuseNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_specular_num"), specularNr);
-	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_normal_num"), normalNr);
-	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_height_num"), heightNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_reflection_num"), reflectionNr);
+	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_height_num"), heightNr);
 
 	// draw mesh
 	glBindVertexArray(VAO);
