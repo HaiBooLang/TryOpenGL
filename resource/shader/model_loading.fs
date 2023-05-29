@@ -78,7 +78,7 @@ void main()
         vec3( 0.0f,    offset,  0.0f),
         vec3( offset,  offset,  0.0f),
         vec3(-offset,  0.0f,    0.0f),
-        vec3( 0.0f,    0.0f,    0.0f),
+        vec3( 0.0f,    0.0f,    offset),
         vec3( offset,  0.0f,    0.0f),
         vec3(-offset, -offset,  0.0f),
         vec3( 0.0f,   -offset,  0.0f),
@@ -97,11 +97,12 @@ void main()
         diffuse += texture(material.texture_diffuse[i], TexCoords).rgb;
     }
 
+    vec3 I = normalize(FragPos - viewPos);
+    vec3 R = reflect(I, normalize(Normal));
+
     vec3 specular = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < material.texture_specular_num; i++)
     {
-        vec3 I = normalize(FragPos - viewPos);
-        vec3 R = reflect(I, normalize(Normal));
         float reflect_intensity = texture(material.texture_specular[i], TexCoords).r;
         if(reflect_intensity > 0.5) // Only sample reflections when above a certain treshold
             specular += texture(skybox, R).rgb * texture(material.texture_specular[i], TexCoords).rgb;
@@ -110,9 +111,6 @@ void main()
     vec3 reflection = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < material.texture_reflection_num; i++)
     {
-        vec3 I = normalize(FragPos - viewPos);
-        vec3 R = reflect(I, normalize(Normal));
-
         vec3 skyboxcolor[9];
         for(int i = 0; i < 9; i++)
         {
@@ -126,10 +124,14 @@ void main()
         reflection += color * texture(material.texture_reflection[i], TexCoords).rgb;
     }
 
-    vec3 result = diffuse + specular * 0.6 + reflection * 0.4;
-
-    // Combine them
-    FragColor = vec4(result, 1.0);
+    vec3 result =vec3(1.0f);
+    if(int(gl_FragCoord.x) % 10 != 0 || int(gl_FragCoord.y) % 10 != 0)
+        result = diffuse + specular * 0.6 + reflection * 0.4;
+    
+    if(gl_FrontFacing)
+        FragColor = vec4(result, 1.0f);
+    else
+        FragColor = vec4(I.x, I.y, I.z, gl_FragCoord.z);
 }
 
 // calculates the color when using a directional light.
