@@ -92,6 +92,7 @@ int main()
 	// build and compile our shader program
 	// ------------------------------------
 	Shader modelShader(R"(resource\shader\model.vert)", R"(resource\shader\model.frag)", R"(resource\shader\model.geom)");
+	Shader normalShader(R"(resource\shader\normal_visualization.vert)", R"(resource\shader\normal_visualization.frag)", R"(resource\shader\normal_visualization.geom)");
 	// Shader pointModelShader(R"(resource\shader\point_model.vert)", R"(resource\shader\point_model.frag)");
 
 	// Shader lightCubeShader(R"(resource\shader\light_cube.vert)", R"(resource\shader\light_cube.frag)");
@@ -128,9 +129,9 @@ int main()
 	unsigned int uboTransformMatrices;
 	glGenBuffers(1, &uboTransformMatrices);
 	glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
-	glBufferData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboTransformMatrices, 0, 3 * sizeof(glm::mat4));
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboTransformMatrices, 0, 2 * sizeof(glm::mat4));
 
 	// shader configuration
 	// --------------------
@@ -172,7 +173,6 @@ int main()
 		glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
-		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
 
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
@@ -184,19 +184,25 @@ int main()
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		modelShader.setMat4("model", model);
 		nanosuit.Draw(modelShader);
-		
+
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		model = glm::mat4(1.0f);		
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
+		modelShader.setMat4("model", model);
 		zelda.Draw(modelShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 		skybox.draw(projection, view);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		normalShader.use();
+		normalShader.setMat4("model", model);
+		nanosuit.Draw(normalShader);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

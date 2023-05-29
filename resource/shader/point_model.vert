@@ -11,12 +11,13 @@ layout (location = 6) in float aWeight;
 layout(std140, binding = 0) uniform Matrices {
 	mat4 projection;
     mat4 view;
-    mat4 model;
 };
 
 out vec2 TexCoords;
 out vec3 FragPos;
 out vec3 Normal;
+
+uniform mat4 model;
 
 void main()
 {

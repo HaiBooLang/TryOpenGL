@@ -43,6 +43,9 @@
     <Filter Include="资源文件\模型\zelda">
       <UniqueIdentifier>{f00efde1-34ed-4eb6-83b1-144f3eb7c3cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\着色器\法线">
+      <UniqueIdentifier>{1424aa97-63ae-4cca-beac-241c20b66da8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -275,6 +278,15 @@
     </None>
     <None Include="resource\model\zelda\Zelda.dae">
       <Filter>资源文件\模型\zelda</Filter>
+    </None>
+    <None Include="resource\shader\normal_visualization.frag">
+      <Filter>资源文件\着色器\法线</Filter>
+    </None>
+    <None Include="resource\shader\normal_visualization.geom">
+      <Filter>资源文件\着色器\法线</Filter>
+    </None>
+    <None Include="resource\shader\normal_visualization.vert">
+      <Filter>资源文件\着色器\法线</Filter>
     </None>
   </ItemGroup>
 </Project>
