@@ -40,6 +40,9 @@
     <Filter Include="资源文件\模型\nanosuit">
       <UniqueIdentifier>{9278e2c6-afe2-4a83-b1b2-2c4d94431e05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\模型\zelda">
+      <UniqueIdentifier>{f00efde1-34ed-4eb6-83b1-144f3eb7c3cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -157,6 +160,87 @@
     <Image Include="resource\model\nanosuit\leg_showroom_spec.png">
       <Filter>资源文件\模型\nanosuit</Filter>
     </Image>
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_shadow_l_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_shadow_r_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_face_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_face_ao.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_face_damage_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_face_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_face_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_damage_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_damage_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_damage_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_skin_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_skin_ao.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_skin_damage_alb.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_skin_nrm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
+    <Image Include="resource\model\zelda\npc_zelda_skin_spm.png">
+      <Filter>资源文件\模型\zelda</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\shader\skybox.frag">
@@ -165,10 +249,10 @@
     <None Include="resource\shader\skybox.vert">
       <Filter>资源文件\着色器\天空盒</Filter>
     </None>
-    <None Include="resource\shader\model_loading.vert">
+    <None Include="resource\shader\model.vert">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\model_loading.frag">
+    <None Include="resource\shader\model.frag">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
     <None Include="resource\shader\light_cube.vert">
@@ -185,6 +269,12 @@
     </None>
     <None Include="resource\shader\point_model.frag">
       <Filter>资源文件\着色器\模型</Filter>
+    </None>
+    <None Include="resource\shader\model.geom">
+      <Filter>资源文件\着色器\模型</Filter>
+    </None>
+    <None Include="resource\model\zelda\Zelda.dae">
+      <Filter>资源文件\模型\zelda</Filter>
     </None>
   </ItemGroup>
 </Project>

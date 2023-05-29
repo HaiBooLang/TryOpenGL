@@ -46,12 +46,7 @@ constexpr float cubeR = 1.0f;
 constexpr float cubeG = 1.0f;
 constexpr float cubeB = 1.0f;
 
-int CALLBACK WinMain(
-	_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nShowCmd
-)
+int main()
 {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -96,14 +91,15 @@ int CALLBACK WinMain(
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader modelShader(R"(resource\shader\model_loading.vert)", R"(resource\shader\model_loading.frag)");
-	Shader pointModelShader(R"(resource\shader\point_model.vert)", R"(resource\shader\point_model.frag)");
+	Shader modelShader(R"(resource\shader\model.vert)", R"(resource\shader\model.frag)", R"(resource\shader\model.geom)");
+	// Shader pointModelShader(R"(resource\shader\point_model.vert)", R"(resource\shader\point_model.frag)");
 
 	// Shader lightCubeShader(R"(resource\shader\light_cube.vert)", R"(resource\shader\light_cube.frag)");
 
 	// load models
 	// -----------
 	Model nanosuit(R"(resource\model\nanosuit\nanosuit.obj)");
+	Model zelda(R"(resource\model\zelda\Zelda.dae)");
 
 	// draw in wireframe
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -143,24 +139,6 @@ int CALLBACK WinMain(
 	modelShader.setVec3("viewPos", camera.Position);
 	modelShader.setFloat("material.shininess", 64.0f);
 
-	/*
-		Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
-		the proper PointLight struct in the array to set each uniform variable. This can be done more code-friendly
-		by defining light types as classes and set their values in there, or by using a more efficient uniform approach
-		by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
-	*/
-	// directional light
-	modelShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.4f, 0.4f, 0.4f), glm::vec3(0.5f, 0.5f, 0.5f));
-	// point light 1
-	modelShader.setPointLight(0, pointLightPositions[0], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-	// point light 2
-	modelShader.setPointLight(1, pointLightPositions[1], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-	// point light 3
-	modelShader.setPointLight(2, pointLightPositions[2], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-	// point light 4
-	modelShader.setPointLight(3, pointLightPositions[3], glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(cubeR * 0.8f, cubeG * 0.8f, cubeB * 0.8f), glm::vec3(cubeR * 1.0f, cubeG * 1.0f, cubeB * 1.0f), 1.0f, 0.09f, 0.032f);
-
-
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -198,23 +176,23 @@ int CALLBACK WinMain(
 
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
-
-		// spotLight
-		modelShader.setSpotLight(camera.Position, camera.Front, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(2.0f, 2.0f, 2.0f), 1.0f, 0.09f, 0.032f, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
+		
+		// add time component to geometry shader in the form of a uniform
+		modelShader.setFloat("time", static_cast<float>(glfwGetTime()));
 
 		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		nanosuit.Draw(modelShader);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		model = glm::mat4(1.0f);		
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(model));
-		nanosuit.Draw(pointModelShader);
+		zelda.Draw(modelShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix

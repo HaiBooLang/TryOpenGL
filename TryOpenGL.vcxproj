@@ -53,6 +53,33 @@
     <Image Include="resource\model\nanosuit\leg_showroom_ddn.png" />
     <Image Include="resource\model\nanosuit\leg_showroom_refl.png" />
     <Image Include="resource\model\nanosuit\leg_showroom_spec.png" />
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_shadow_l_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_shadow_r_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_eyeball_spm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_face_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_face_ao.png" />
+    <Image Include="resource\model\zelda\npc_zelda_face_damage_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_face_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_face_spm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_damage_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_body_spm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_damage_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_bracelet_spm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_damage_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_miko_hair_spm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_skin_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_skin_ao.png" />
+    <Image Include="resource\model\zelda\npc_zelda_skin_damage_alb.png" />
+    <Image Include="resource\model\zelda\npc_zelda_skin_nrm.png" />
+    <Image Include="resource\model\zelda\npc_zelda_skin_spm.png" />
     <Image Include="resource\texture\awesomeface.png" />
     <Image Include="resource\texture\skybox\back.jpg" />
     <Image Include="resource\texture\skybox\bottom.jpg" />
@@ -63,9 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
+    <None Include="resource\model\zelda\Zelda.dae" />
     <None Include="resource\shader\light_cube.frag" />
-    <None Include="resource\shader\model_loading.frag" />
-    <None Include="resource\shader\model_loading.vert" />
+    <None Include="resource\shader\model.geom" />
+    <None Include="resource\shader\model.frag" />
+    <None Include="resource\shader\model.vert" />
     <None Include="resource\shader\light_cube.vert" />
     <None Include="resource\shader\point_model.frag" />
     <None Include="resource\shader\point_model.vert" />

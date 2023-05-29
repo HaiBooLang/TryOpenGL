@@ -102,7 +102,7 @@ public:
 
 		glLinkProgram(ID);
 		checkCompileErrors(ID, "PROGRAM");
-		
+
 #ifdef _DEBUG
 		std::cout << "SUCCESSFULLY::SHADER::SUCCESSFULLY_LINK_AND_COMPILE_SHADER\n"
 			<< "    SHADER_ID: " << ID << "\n"
@@ -191,11 +191,11 @@ public:
 	}
 	void setDirLight(const int index, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
 	{
-		std::string index_string = std::to_string(index);
-		setVec3("dirLight[" + index_string + "].direction", direction);
-		setVec3("dirLight[" + index_string + "].ambient", ambient);
-		setVec3("dirLight[" + index_string + "].diffuse", diffuse);
-		setVec3("dirLight[" + index_string + "].specular", specular);
+		std::string prefix = "dirLight[" + std::to_string(index);
+		setVec3(prefix + "].direction", direction);
+		setVec3(prefix + "].ambient", ambient);
+		setVec3(prefix + "].diffuse", diffuse);
+		setVec3(prefix + "].specular", specular);
 	}
 
 	void setPointLight(const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic)
@@ -210,14 +210,14 @@ public:
 	}
 	void setPointLight(const int index, const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic)
 	{
-		std::string index_string = std::to_string(index);
-		setVec3("pointLights[" + index_string + "].position", position);
-		setVec3("pointLights[" + index_string + "].ambient", ambient);
-		setVec3("pointLights[" + index_string + "].diffuse", diffuse);
-		setVec3("pointLights[" + index_string + "].specular", specular);
-		setFloat("pointLights[" + index_string + "].constant", constant);
-		setFloat("pointLights[" + index_string + "].linear", linear);
-		setFloat("pointLights[" + index_string + "].quadratic", quadratic);
+		std::string prefix = "pointLights[" + std::to_string(index);
+		setVec3(prefix + "].position", position);
+		setVec3(prefix + "].ambient", ambient);
+		setVec3(prefix + "].diffuse", diffuse);
+		setVec3(prefix + "].specular", specular);
+		setFloat(prefix + "].constant", constant);
+		setFloat(prefix + "].linear", linear);
+		setFloat(prefix + "].quadratic", quadratic);
 	}
 
 	void setSpotLight(const glm::vec3& position, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic, const float cutOff, const float outerCutOff)
@@ -235,17 +235,17 @@ public:
 	}
 	void setSpotLight(const int index, const glm::vec3& position, const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const float constant, const float linear, const float quadratic, const float cutOff, const float outerCutOff)
 	{
-		std::string index_string = std::to_string(index);
-		setVec3("spotLight[" + index_string + "].position", position);
-		setVec3("spotLight[" + index_string + "].direction", direction);
-		setVec3("spotLight[" + index_string + "].ambient", ambient);
-		setVec3("spotLight[" + index_string + "].diffuse", diffuse);
-		setVec3("spotLight[" + index_string + "].specular", specular);
-		setFloat("spotLight[" + index_string + "].constant", constant);
-		setFloat("spotLight[" + index_string + "].linear", linear);
-		setFloat("spotLight[" + index_string + "].quadratic", quadratic);
-		setFloat("spotLight[" + index_string + "].cutOff", cutOff);
-		setFloat("spotLight[" + index_string + "].outerCutOff", outerCutOff);
+		std::string prefix = "spotLight[" + std::to_string(index);
+		setVec3(prefix + "].position", position);
+		setVec3(prefix + "].direction", direction);
+		setVec3(prefix + "].ambient", ambient);
+		setVec3(prefix + "].diffuse", diffuse);
+		setVec3(prefix + "].specular", specular);
+		setFloat(prefix + "].constant", constant);
+		setFloat(prefix + "].linear", linear);
+		setFloat(prefix + "].quadratic", quadratic);
+		setFloat(prefix + "].cutOff", cutOff);
+		setFloat(prefix + "].outerCutOff", outerCutOff);
 	}
 private:
 	// utility function for checking shader compilation/linking errors.
