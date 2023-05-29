@@ -159,31 +159,31 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader\skybox.fs">
+    <None Include="resource\shader\skybox.frag">
       <Filter>资源文件\着色器\天空盒</Filter>
     </None>
-    <None Include="resource\shader\skybox.vs">
+    <None Include="resource\shader\skybox.vert">
       <Filter>资源文件\着色器\天空盒</Filter>
     </None>
-    <None Include="resource\shader\model_loading.vs">
+    <None Include="resource\shader\model_loading.vert">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\model_loading.fs">
+    <None Include="resource\shader\model_loading.frag">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\light_cube.vs">
+    <None Include="resource\shader\light_cube.vert">
       <Filter>资源文件\着色器\光源</Filter>
     </None>
-    <None Include="resource\shader\light_cube.fs">
+    <None Include="resource\shader\light_cube.frag">
       <Filter>资源文件\着色器\光源</Filter>
     </None>
     <None Include="resource\model\nanosuit\nanosuit.mtl">
       <Filter>资源文件\模型\nanosuit</Filter>
     </None>
-    <None Include="resource\shader\point_model.vs">
+    <None Include="resource\shader\point_model.vert">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\point_model.fs">
+    <None Include="resource\shader\point_model.frag">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
   </ItemGroup>

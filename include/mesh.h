@@ -133,7 +133,8 @@ inline void Mesh::Draw(Shader& shader) const
 	unsigned int heightNr = 0;
 	unsigned int reflectionNr = 0;
 
-	for (unsigned int i = 0; i < textures.size(); i++)
+	unsigned int i;
+	for (i = 0; i < textures.size(); i++)
 	{
 		// active proper texture unit before binding
 		// binding multiple textures for a single drawing call
@@ -162,6 +163,18 @@ inline void Mesh::Draw(Shader& shader) const
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_specular_num"), specularNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_reflection_num"), reflectionNr);
 	glUniform1i(glGetUniformLocation(shader.ID, "material.texture_height_num"), heightNr);
+
+//#ifdef _DEBUG
+//	std::cout << "SUCCESSFULLY::MESH::BIND_TEXTURE\n"
+//		<< "    SHADER_ID" << shader.ID << "\n"
+//		<< "    TEXTURE_UNIT_NUM: " << i << "\n"
+//		<< "    TEXTURE_DIFFUSE_NUM: " << diffuseNr << "\n"
+//		<< "    TEXTURE_SPECULAR_NUM: " << specularNr << "\n"
+//		<< "    TEXTURE_NORMAL_NUM: " << normalNr << "\n"
+//		<< "    TEXTURE_HEIGHT_NUM: " << heightNr << "\n"
+//		<< "    TEXTURE_REFLECTION_NUM: " << reflectionNr << "\n"
+//		<< std::endl;
+//#endif
 
 	// draw mesh
 	glBindVertexArray(VAO);

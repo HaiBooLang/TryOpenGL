@@ -144,7 +144,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     // combine results
-    return CalLightSum(light.ambient, light.diffuse, light.specular, diff, spec);
+    return CalcLightSum(light.ambient, light.diffuse, light.specular, diff, spec);
 }
 
 // calculates the color when using a point light.
@@ -160,7 +160,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float distance = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
     // combine results
-    return CalLightSum(light.ambient, light.diffuse, light.specular, diff, spec) * attenuation;
+    return CalcLightSum(light.ambient, light.diffuse, light.specular, diff, spec) * attenuation;
 }
 
 // calculates the color when using a spot light.
@@ -180,7 +180,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float epsilon = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
     // combine results
-    return CalLightSum(light.ambient, light.diffuse, light.specular, diff, spec) * attenuation * intensity;
+    return CalcLightSum(light.ambient, light.diffuse, light.specular, diff, spec) * attenuation * intensity;
 }
 
 vec3 CalcLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec)

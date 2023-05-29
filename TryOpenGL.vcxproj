@@ -63,14 +63,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
-    <None Include="resource\shader\light_cube.fs" />
-    <None Include="resource\shader\model_loading.fs" />
-    <None Include="resource\shader\model_loading.vs" />
-    <None Include="resource\shader\light_cube.vs" />
-    <None Include="resource\shader\point_model.fs" />
-    <None Include="resource\shader\point_model.vs" />
-    <None Include="resource\shader\skybox.fs" />
-    <None Include="resource\shader\skybox.vs" />
+    <None Include="resource\shader\light_cube.frag" />
+    <None Include="resource\shader\model_loading.frag" />
+    <None Include="resource\shader\model_loading.vert" />
+    <None Include="resource\shader\light_cube.vert" />
+    <None Include="resource\shader\point_model.frag" />
+    <None Include="resource\shader\point_model.vert" />
+    <None Include="resource\shader\skybox.frag" />
+    <None Include="resource\shader\skybox.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
