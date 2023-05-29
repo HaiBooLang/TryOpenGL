@@ -102,6 +102,14 @@ public:
 		glLinkProgram(ID);
 		checkCompileErrors(ID, "PROGRAM");
 		
+#ifdef _DEBUG
+		std::cout << "SUCCESSFULLY::SHADER::SUCCESSFULLY_LINK_AND_COMPILE_SHADER\n"
+			<< "    SHADER_ID: " << ID << "\n"
+			<< "    VERTEX_SHADER_PATH: " << vertexPath << "\n"
+			<< "    FRAGMENT_SAHDER_PATH: " << fragmentPath << "\n"
+			<< "    GEOMETRY_SHADER_PATH: " << ((geometryPath == nullptr) ? "NULL" : geometryPath) << "\n";
+#endif
+
 		// delete the shaders as they're linked into our program now and no longer necessary
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
