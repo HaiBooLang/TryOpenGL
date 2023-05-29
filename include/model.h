@@ -116,13 +116,7 @@ private:
 			vertex.Position = vector;
 
 			// find position boundary
-			if (i == 0)
-			{
-				positionBoundary.maxX = positionBoundary.minX = vector.x;
-				positionBoundary.maxY = positionBoundary.minY = vector.y;
-				positionBoundary.maxZ = positionBoundary.minZ = vector.z;
-			}
-			else
+			if (i != 0)
 			{
 				if (vector.x > positionBoundary.maxX)
 					positionBoundary.maxX = vector.x;
@@ -136,6 +130,12 @@ private:
 					positionBoundary.maxZ = vector.z;
 				else if (vector.z < positionBoundary.minZ)
 					positionBoundary.minZ = vector.z;
+			}
+			else
+			{
+				positionBoundary.maxX = positionBoundary.minX = vector.x;
+				positionBoundary.maxY = positionBoundary.minY = vector.y;
+				positionBoundary.maxZ = positionBoundary.minZ = vector.z;
 			}
 
 			// normals
