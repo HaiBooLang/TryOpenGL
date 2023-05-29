@@ -19,8 +19,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 void showFPS(GLFWwindow* pWindow);
-unsigned int loadTexture(const char* path);
-unsigned int loadCubemap(vector<std::string> faces);
 
 // settings
 constexpr unsigned int SCR_WIDTH = 1600;
@@ -173,7 +171,7 @@ int CALLBACK WinMain(
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 
-		// transformation matrices
+		// buffer transformation matrices
 		glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
@@ -221,7 +219,7 @@ int CALLBACK WinMain(
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-		skybox.draw(projection,view);
+		skybox.draw(projection, view);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -307,14 +305,14 @@ void showFPS(GLFWwindow* pWindow)
 	framesNumber++;
 
 	if (deltaTime >= 0.6) { // If last cout was more than 0.6 sec ago
-		std::cout << 1000.0 / static_cast<float>(framesNumber) << std::endl;
+		// std::cout << 1000.0 / static_cast<float>(framesNumber) << std::endl;
 
 		float fps = static_cast<float>(framesNumber) / deltaTime;
 
-		std::stringstream ss;
-		ss << "HaiBooLang     " << "[ " << fps << " FPS ]";
+		std::stringstream sstream;
+		sstream << "HaiBooLang     " << "[ " << fps << " FPS ]";
 
-		glfwSetWindowTitle(pWindow, ss.str().c_str());
+		glfwSetWindowTitle(pWindow, sstream.str().c_str());
 
 		framesNumber = 0;
 		lastTime = currentTime;

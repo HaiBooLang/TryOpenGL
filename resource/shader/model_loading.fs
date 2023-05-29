@@ -65,7 +65,7 @@ uniform Material material;
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-vec3 CalLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec);
+vec3 CalcLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec);
 
 out vec4 FragColor;
 
@@ -183,7 +183,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     return CalLightSum(light.ambient, light.diffuse, light.specular, diff, spec) * attenuation * intensity;
 }
 
-vec3 CalLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec)
+vec3 CalcLightSum(vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, float diff, float spec)
 {
     vec3 diffuse = vec3(0.0f, 0.0f, 0.0f);
     for(int i = 0; i < material.texture_diffuse_num; i++)

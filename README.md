@@ -37,7 +37,7 @@
 
 ### UE5
 
-\- [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
+- [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
 
 ### Windows
 
@@ -61,6 +61,8 @@
 - [上帝视角看GPU（5）：图形流水线里的不可编程单元](https://www.bilibili.com/video/BV1dL4y1c789)
 - [上帝视角看GPU（6）：光线跟踪流水线](https://www.bilibili.com/video/BV1AF41157Md)
 - [Games101+《入门精要》基础 1.4 纹理](https://zhuanlan.zhihu.com/p/366103244)
+- [Games104 游戏引擎公开课文字实录](https://mp.weixin.qq.com/mp/appmsgalbum?&action=getalbum&album_id=2583276961356152834)
+- [WebGL进阶—走进图形噪声](https://zhuanlan.zhihu.com/p/68507311)
 
 ### Other
 
