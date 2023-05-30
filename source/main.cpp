@@ -114,13 +114,14 @@ int main()
 
 	vector<std::string> faces
 	{
-		R"(resource\texture\skybox\right.jpg)",
-		R"(resource\texture\skybox\left.jpg)",
-		R"(resource\texture\skybox\top.jpg)",
-		R"(resource\texture\skybox\bottom.jpg)",
-		R"(resource\texture\skybox\front.jpg)",
-		R"(resource\texture\skybox\back.jpg)"
+		R"(resource\texture\skybox\px.png)",
+		R"(resource\texture\skybox\nx.png)",
+		R"(resource\texture\skybox\py.png)",
+		R"(resource\texture\skybox\ny.png)",
+		R"(resource\texture\skybox\pz.png)",
+		R"(resource\texture\skybox\nz.png)"
 	};
+	// Skybox skybox(R"(resource\texture\skybox\StandardCubeMap.png)", R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 	Skybox skybox(faces, R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 
 	unsigned int cubemapTexture = skybox.cubemapTexture();

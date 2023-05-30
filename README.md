@@ -68,9 +68,12 @@
 - [Games101+《入门精要》基础 1.4 纹理](https://zhuanlan.zhihu.com/p/366103244)
 - [Games104 游戏引擎公开课文字实录](https://mp.weixin.qq.com/mp/appmsgalbum?&action=getalbum&album_id=2583276961356152834)
 - [WebGL进阶—走进图形噪声](https://zhuanlan.zhihu.com/p/68507311)
+- [细说图形学渲染管线](https://positiveczp.github.io/细说图形学渲染管线.html)
 
 ### Other
 
 - [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)
 - [一文看懂ECS架构](https://zhuanlan.zhihu.com/p/618971664)
 - [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)
+- [HDRI to CubeMap](https://matheowis.github.io/HDRI-to-CubeMap/)
+- [Poly Haven](https://polyhaven.com/)

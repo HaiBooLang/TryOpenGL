@@ -30,6 +30,7 @@ public:
 		shader.use();
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
+		
 		// skybox cube
 		glBindVertexArray(VAO);
 		glActiveTexture(GL_TEXTURE0);
@@ -50,9 +51,9 @@ private:
 
 		loadCubemap(faces);
 
-		// shader configuration, set texture unit
-		shader.use();
-		shader.setInt("skybox", 0);
+#ifdef _DEBUG
+		std::cout << "SUCCESSFULLY::SKYBOX::SUCCESSFULLY_SET_UP_SKYBOX\n";
+#endif
 	}
 
 	void loadCubemap(const std::vector<std::string>& faces)
@@ -71,7 +72,8 @@ private:
 			}
 			else
 			{
-				std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+				std::cerr << "ERROR::SKYBOX::LOAD_TEXTURE_FAILED\n"
+					<< "    Cubemap texture failed to load at path : " << faces[i] << "\n";
 				stbi_image_free(data);
 			}
 		}
@@ -83,9 +85,9 @@ private:
 	}
 private:
 	Shader shader;
+	std::vector<std::string> faces;
 	unsigned int textureID;
 	unsigned int VAO, VBO;
-	std::vector<std::string> faces;
 	const float vertices[108] = {
 		// positions          
 		-1.0f,  1.0f, -1.0f,	-1.0f, -1.0f, -1.0f,	1.0f, -1.0f, -1.0f,
