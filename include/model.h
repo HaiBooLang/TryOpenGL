@@ -57,6 +57,12 @@ public:
 			mesh.Draw(shader);
 	}
 
+	void DrawInstanced(Shader& shader,const unsigned int count)
+	{
+		for (const auto& mesh : meshes)
+			mesh.DrawInstanced(shader, count);
+	}
+
 private:
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(const string& path)

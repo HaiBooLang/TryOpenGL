@@ -46,6 +46,12 @@
     <Filter Include="资源文件\着色器\法线">
       <UniqueIdentifier>{1424aa97-63ae-4cca-beac-241c20b66da8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\着色器\模型\花里胡哨">
+      <UniqueIdentifier>{fdc27127-f369-4420-a61c-3209be865891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\着色器\模型\光照测试">
+      <UniqueIdentifier>{a04a275d-a799-45fa-b8dc-7aa9378598fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -252,12 +258,6 @@
     <None Include="resource\shader\skybox.vert">
       <Filter>资源文件\着色器\天空盒</Filter>
     </None>
-    <None Include="resource\shader\model.vert">
-      <Filter>资源文件\着色器\模型</Filter>
-    </None>
-    <None Include="resource\shader\model.frag">
-      <Filter>资源文件\着色器\模型</Filter>
-    </None>
     <None Include="resource\shader\light_cube.vert">
       <Filter>资源文件\着色器\光源</Filter>
     </None>
@@ -273,9 +273,6 @@
     <None Include="resource\shader\point_model.frag">
       <Filter>资源文件\着色器\模型</Filter>
     </None>
-    <None Include="resource\shader\model.geom">
-      <Filter>资源文件\着色器\模型</Filter>
-    </None>
     <None Include="resource\model\zelda\Zelda.dae">
       <Filter>资源文件\模型\zelda</Filter>
     </None>
@@ -287,6 +284,21 @@
     </None>
     <None Include="resource\shader\normal_visualization.vert">
       <Filter>资源文件\着色器\法线</Filter>
+    </None>
+    <None Include="resource\shader\model.vert">
+      <Filter>资源文件\着色器\模型\花里胡哨</Filter>
+    </None>
+    <None Include="resource\shader\model.frag">
+      <Filter>资源文件\着色器\模型\花里胡哨</Filter>
+    </None>
+    <None Include="resource\shader\model.geom">
+      <Filter>资源文件\着色器\模型\花里胡哨</Filter>
+    </None>
+    <None Include="resource\shader\model_lighting.frag">
+      <Filter>资源文件\着色器\模型\光照测试</Filter>
+    </None>
+    <None Include="resource\shader\model_lighting.vert">
+      <Filter>资源文件\着色器\模型\光照测试</Filter>
     </None>
   </ItemGroup>
 </Project>

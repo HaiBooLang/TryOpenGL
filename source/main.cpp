@@ -55,6 +55,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// glfw window creation
 	// --------------------  
@@ -86,31 +87,17 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-	// glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader modelShader(R"(resource\shader\model.vert)", R"(resource\shader\model.frag)", R"(resource\shader\model.geom)");
-	Shader normalShader(R"(resource\shader\normal_visualization.vert)", R"(resource\shader\normal_visualization.frag)", R"(resource\shader\normal_visualization.geom)");
-	// Shader pointModelShader(R"(resource\shader\point_model.vert)", R"(resource\shader\point_model.frag)");
-
-	// Shader lightCubeShader(R"(resource\shader\light_cube.vert)", R"(resource\shader\light_cube.frag)");
+	Shader modelShader(R"(resource\shader\model_lighting.vert)", R"(resource\shader\model_lighting.frag)");
 
 	// load models
 	// -----------
 	Model nanosuit(R"(resource\model\nanosuit\nanosuit.obj)");
 	Model zelda(R"(resource\model\zelda\Zelda.dae)");
-
-	// draw in wireframe
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	glm::vec3 pointLightPositions[] = {
-		glm::vec3(0.7f,  0.2f,  2.0f),
-		glm::vec3(2.3f, -3.3f, -4.0f),
-		glm::vec3(-4.0f,  2.0f, -12.0f),
-		glm::vec3(0.0f,  0.0f, -3.0f)
-	};
 
 	vector<std::string> faces
 	{
@@ -137,7 +124,7 @@ int main()
 	// shader configuration
 	// --------------------
 	modelShader.use();
-	modelShader.setInt("skybox", 5);
+	modelShader.setInt("skybox", 10);
 	modelShader.setVec3("viewPos", camera.Position);
 	modelShader.setFloat("material.shininess", 64.0f);
 
@@ -178,14 +165,11 @@ int main()
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
 		
-		// add time component to geometry shader in the form of a uniform
-		modelShader.setFloat("time", static_cast<float>(glfwGetTime()));
-
-		glActiveTexture(GL_TEXTURE5);
+		glActiveTexture(GL_TEXTURE10);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		modelShader.setMat4("model", model);
+		modelShader.setVec3("viewPos", camera.Position);
 		nanosuit.Draw(modelShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -199,11 +183,6 @@ int main()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 		skybox.draw(projection, view);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		normalShader.use();
-		normalShader.setMat4("model", model);
-		nanosuit.Draw(normalShader);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

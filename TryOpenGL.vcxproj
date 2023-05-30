@@ -96,6 +96,8 @@
     <None Include="resource\shader\model.frag" />
     <None Include="resource\shader\model.vert" />
     <None Include="resource\shader\light_cube.vert" />
+    <None Include="resource\shader\model_lighting.frag" />
+    <None Include="resource\shader\model_lighting.vert" />
     <None Include="resource\shader\normal_visualization.frag" />
     <None Include="resource\shader\normal_visualization.geom" />
     <None Include="resource\shader\normal_visualization.vert" />
