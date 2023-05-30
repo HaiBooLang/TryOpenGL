@@ -5,6 +5,7 @@
 ## 任务清单
 
 - [ ] 学习 [LearnOpenGL-CN](https://github.com/LearnOpenGL-CN)
+- [ ] 制作mini实时渲染器
 - [ ] OpenGL 制作 **Minecraft**
 
 ## 参考
@@ -70,10 +71,20 @@
 - [WebGL进阶—走进图形噪声](https://zhuanlan.zhihu.com/p/68507311)
 - [细说图形学渲染管线](https://positiveczp.github.io/细说图形学渲染管线.html)
 
-### Other
+### Engineering
 
 - [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)
+
+#### RenderDoc
+
+- [RenderDoc Quick Start](https://www.wolai.com/sixerrr/hn8UgYQdvTRRjVyP2GEyXx)
+
+#### ECS
+
 - [一文看懂ECS架构](https://zhuanlan.zhihu.com/p/618971664)
+
+### Resource
+
 - [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)
 - [HDRI to CubeMap](https://matheowis.github.io/HDRI-to-CubeMap/)
 - [Poly Haven](https://polyhaven.com/)

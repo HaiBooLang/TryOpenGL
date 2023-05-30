@@ -50,8 +50,6 @@ constexpr float cubeR = 1.0f;
 constexpr float cubeG = 1.0f;
 constexpr float cubeB = 1.0f;
 
-bool mouse = true;
-
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -107,6 +105,8 @@ int CALLBACK WinMain(
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+
 
 	// build and compile our shader program
 	// ------------------------------------
@@ -176,7 +176,7 @@ int CALLBACK WinMain(
 	// ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
 	// ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
 
-
+	bool mouse = true;
 
 	// render loop
 	// -----------
@@ -206,6 +206,11 @@ int CALLBACK WinMain(
 
 		// input
 		// -----
+		if (mouse)
+		{
+			processInput(window);
+		}
+
 		if (mouse)
 		{
 			processInput(window);
@@ -358,16 +363,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
-
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (key == GLFW_KEY_1)
-	{
-		mouse += 1;
-	}
-}
-
-
 
 //void ShowMonitor(bool* p_open, Camera& camera, ImGuiIO& io, std::ostringstream& buffer)
 //{

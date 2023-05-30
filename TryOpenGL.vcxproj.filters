@@ -67,6 +67,9 @@
     <Filter Include="resource\shader\model\...ヽ%28 ´_つ｀%29ノ %3f">
       <UniqueIdentifier>{fdc27127-f369-4420-a61c-3209be865891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ui">
+      <UniqueIdentifier>{1591d462-1ac6-42f4-9a8a-e22241862902}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1261,6 +1264,12 @@
     </ClInclude>
     <ClInclude Include="external\imgui\imstb_truetype.h">
       <Filter>external\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\console.h">
+      <Filter>include\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\monitor.h">
+      <Filter>include\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
