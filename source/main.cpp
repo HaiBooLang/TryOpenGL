@@ -122,6 +122,8 @@ int main()
 	// -----------
 	Model nanosuit(R"(resource\model\nanosuit\nanosuit.obj)");
 	Model zelda(R"(resource\model\zelda\Zelda.dae)");
+	Model nahida(R"(resource\model\nahida\nahida.pmx)");
+	Model creeper(R"(resource\model\\creeper\source\creeper.fbx)");
 
 	vector<std::string> faces
 	{
@@ -132,7 +134,6 @@ int main()
 		R"(resource\texture\skybox\pz.png)",
 		R"(resource\texture\skybox\nz.png)"
 	};
-	// Skybox skybox(R"(resource\texture\skybox\StandardCubeMap.png)", R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 	Skybox skybox(faces, R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 
 	unsigned int cubemapTexture = skybox.cubemapTexture();
@@ -219,6 +220,7 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!		
 
+		// set up shader
 		modelShader.use();
 
 		glActiveTexture(GL_TEXTURE10);
@@ -235,20 +237,41 @@ int main()
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 
+		// draw nanosuit
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(nanosuit.getScaling()));	// it's a bit too big for our scene, so scale it down
+		model = glm::scale(model, glm::vec3(nanosuit.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
 
 		nanosuit.Draw(modelShader);
 
+		// draw zelda
 		model = glm::mat4(1.0f);		
 		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(zelda.getScaling()));	// it's a bit too big for our scene, so scale it down
+		model = glm::scale(model, glm::vec3(zelda.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
 		
 		zelda.Draw(modelShader);
+
+		// draw nahida
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(nahida.getScalingY()));	// it's a bit too big for our scene, so scale it down
+		modelShader.setMat4("model", model);
+
+		nahida.Draw(modelShader);
+
+		// draw creeper
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(creeper.getScalingZ()));	// it's a bit too big for our scene, so scale it down
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
+		modelShader.setMat4("model", model);
+		
+		creeper.Draw(modelShader);
 	
+		// draw skybox
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+		
 		skybox.draw(projection, view);
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

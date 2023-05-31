@@ -420,6 +420,16 @@
     <ClInclude Include="include\skybox.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\model\nahida\hair.bmp" />
+    <Image Include="resource\model\nahida\skin.bmp" />
+    <Image Include="resource\model\nahida\sph\hair_s.bmp" />
+    <Image Include="resource\model\nahida\sph\s1.bmp" />
+    <Image Include="resource\model\nahida\tex\spa_h.png" />
+    <Image Include="resource\model\nahida\tex\体1.png" />
+    <Image Include="resource\model\nahida\tex\肌.png" />
+    <Image Include="resource\model\nahida\tex\颜.png" />
+    <Image Include="resource\model\nahida\tex\髮1.png" />
+    <Image Include="resource\model\nahida\toon_defo.bmp" />
     <Image Include="resource\model\nanosuit\arm_dif.png" />
     <Image Include="resource\model\nanosuit\arm_showroom_ddn.png" />
     <Image Include="resource\model\nanosuit\arm_showroom_refl.png" />
@@ -623,6 +633,7 @@
     <None Include="external\glm\gtx\vector_angle.inl" />
     <None Include="external\glm\gtx\vector_query.inl" />
     <None Include="external\glm\gtx\wrap.inl" />
+    <None Include="resource\model\nahida\nahida.pmx" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
     <None Include="resource\model\zelda\Zelda.dae" />
     <None Include="resource\shader\light_cube.frag" />

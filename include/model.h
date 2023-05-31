@@ -64,9 +64,19 @@ public:
 			mesh.DrawInstanced(shader, count);
 	}
 
-	float getScaling()
+	float getScalingX()
+	{
+		return 1.0f / (positionBoundary.maxX - positionBoundary.minX);
+	}
+
+	float getScalingY()
 	{
 		return 1.0f / (positionBoundary.maxY - positionBoundary.minY);
+	}
+
+	float getScalingZ()
+	{
+		return 1.0f / (positionBoundary.maxZ - positionBoundary.minZ);
 	}
 
 private:
