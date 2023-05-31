@@ -27,6 +27,7 @@ struct PositionBoundary
 	float maxX = std::numeric_limits<float>::min();
 	float maxY = std::numeric_limits<float>::min();
 	float maxZ = std::numeric_limits<float>::min();
+
 	float minX = std::numeric_limits<float>::max();
 	float minY = std::numeric_limits<float>::max();
 	float minZ = std::numeric_limits<float>::max();
@@ -57,10 +58,15 @@ public:
 			mesh.Draw(shader);
 	}
 
-	void DrawInstanced(Shader& shader,const unsigned int count)
+	void DrawInstanced(Shader& shader, const unsigned int count)
 	{
 		for (const auto& mesh : meshes)
 			mesh.DrawInstanced(shader, count);
+	}
+
+	float getScaling()
+	{
+		return 1.0f / (positionBoundary.maxY - positionBoundary.minY);
 	}
 
 private:
@@ -122,27 +128,19 @@ private:
 			vertex.Position = vector;
 
 			// find position boundary
-			if (i != 0)
-			{
-				if (vector.x > positionBoundary.maxX)
-					positionBoundary.maxX = vector.x;
-				else if (vector.x < positionBoundary.minX)
-					positionBoundary.minX = vector.x;
-				if (vector.y > positionBoundary.maxY)
-					positionBoundary.maxY = vector.y;
-				else if (vector.y < positionBoundary.minY)
-					positionBoundary.minY = vector.y;
-				if (vector.z > positionBoundary.maxZ)
-					positionBoundary.maxZ = vector.z;
-				else if (vector.z < positionBoundary.minZ)
-					positionBoundary.minZ = vector.z;
-			}
-			else
-			{
-				positionBoundary.maxX = positionBoundary.minX = vector.x;
-				positionBoundary.maxY = positionBoundary.minY = vector.y;
-				positionBoundary.maxZ = positionBoundary.minZ = vector.z;
-			}
+			if (vector.x > positionBoundary.maxX)
+				positionBoundary.maxX = vector.x;
+			else if (vector.x < positionBoundary.minX)
+				positionBoundary.minX = vector.x;
+			if (vector.y > positionBoundary.maxY)
+				positionBoundary.maxY = vector.y;
+			else if (vector.y < positionBoundary.minY)
+				positionBoundary.minY = vector.y;
+			if (vector.z > positionBoundary.maxZ)
+				positionBoundary.maxZ = vector.z;
+			else if (vector.z < positionBoundary.minZ)
+				positionBoundary.minZ = vector.z;
+
 
 			// normals
 			if (mesh->HasNormals())

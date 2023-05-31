@@ -207,7 +207,6 @@ int main()
 		// Rendering
 		ImGui::Render();
 
-
 		// show fps in window title 
 		showFPS(window);
 
@@ -218,39 +217,37 @@ int main()
 		// render
 		// ------
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
-		
-		// projection view model transformation matrices
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!		
+
+		modelShader.use();
+
+		glActiveTexture(GL_TEXTURE10);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+
+		modelShader.setVec3("viewPos", camera.Position);
+
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 
 		// buffer transformation matrices
 		glBindBuffer(GL_UNIFORM_BUFFER, uboTransformMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 
-		// don't forget to enable shader before setting uniforms
-		modelShader.use();
-		
-		glActiveTexture(GL_TEXTURE10);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(nanosuit.getScaling()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
-		modelShader.setVec3("viewPos", camera.Position);
+
 		nanosuit.Draw(modelShader);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		model = glm::mat4(1.0f);		
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(zelda.getScaling()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
+		
 		zelda.Draw(modelShader);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
+	
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 		skybox.draw(projection, view);
 
