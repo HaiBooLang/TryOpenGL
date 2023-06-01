@@ -1,0 +1,10 @@
+{
+  "skybox_map": {
+    "negative_x_map": "resource/texture/skybox/nx.png",
+    "positive_x_map": "resource/texture/skybox/px.png",
+    "negative_y_map": "resource/texture/skybox/ny.png",
+    "positive_y_map": "resource/texture/skybox/py.png",
+    "negative_z_map": "resource/texture/skybox/nz.png",
+    "positive_z_map": "resource/texture/skybox/pz.png"
+  }
+}

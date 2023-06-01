@@ -4,8 +4,16 @@
 
 ## 任务清单
 
+### 长期
+
 - [ ] 学习 [LearnOpenGL-CN](https://github.com/LearnOpenGL-CN)
+- [ ] 写个 小引擎
 - [ ] OpenGL 制作 **Minecraft**
+
+### 短期
+
+- [ ] imgui 写出基本 UI
+- [ ] 将渲染器逻辑 input 和 update 和 render 分开
 
 ## 参考
 
@@ -56,25 +64,51 @@
 
 ### Computer Graphics
 
+#### Games Webinar
+
 - [Games104](https://games104.boomingtech.com/sc/)
 - [Games101](http://games-cn.org/intro-graphics/)
 - [Raytracing in One Weekend](https://github.com/RayTracing/raytracing.github.io)
+
+#### GPU Graphics Pipeline
+
 - [上帝视角看GPU（1）：图形流水线基础](https://www.bilibili.com/video/BV1P44y1V7bu)
 - [上帝视角看GPU（2）：逻辑上的模块划分](https://www.bilibili.com/video/BV1xF411g7Z9)
 - [上帝视角看GPU（3）：部署到硬件](https://www.bilibili.com/video/BV1u3411M72A)
 - [上帝视角看GPU（4）：完整的软件栈](https://www.bilibili.com/video/BV1QT4y1r7Vq)
 - [上帝视角看GPU（5）：图形流水线里的不可编程单元](https://www.bilibili.com/video/BV1dL4y1c789)
 - [上帝视角看GPU（6）：光线跟踪流水线](https://www.bilibili.com/video/BV1AF41157Md)
+
 - [Games101+《入门精要》基础 1.4 纹理](https://zhuanlan.zhihu.com/p/366103244)
 - [Games104 游戏引擎公开课文字实录](https://mp.weixin.qq.com/mp/appmsgalbum?&action=getalbum&album_id=2583276961356152834)
+
+#### Graphics Pipline
+
 - [WebGL进阶—走进图形噪声](https://zhuanlan.zhihu.com/p/68507311)
 - [细说图形学渲染管线](https://positiveczp.github.io/细说图形学渲染管线.html)
 
-### Other
+#### Physically Based Rendering
 
-- [构建C/C++良好的工程结构](https://zhuanlan.zhihu.com/p/59450618)
+- [Physics and Math of Shading](https://youtu.be/j-A0mwsJRmk)
+- [](https://youtu.be/_ZbkOZNgwNk)
+
+### Engineering
+
+#### RenderDoc
+
+- [RenderDoc Quick Start](https://www.wolai.com/sixerrr/hn8UgYQdvTRRjVyP2GEyXx)
+
+#### ECS
+
 - [一文看懂ECS架构](https://zhuanlan.zhihu.com/p/618971664)
+
+### Resource
+
 - [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)
 - [HDRI to CubeMap](https://matheowis.github.io/HDRI-to-CubeMap/)
 - [Poly Haven](https://polyhaven.com/)
 - [imgui consolo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
+
+### Other
+
+- [imgui demo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
