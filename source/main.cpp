@@ -1,7 +1,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <nlohmann/json.hpp>
+// #include <nlohmann/json.hpp>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -47,10 +47,7 @@ float lastTime = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-// cube color
-constexpr float cubeR = 1.0f;
-constexpr float cubeG = 1.0f;
-constexpr float cubeB = 1.0f;
+const float Cactus::CactusEngine::s_fps_alpha = 1.f / 100;
 
 int main()
 {
@@ -119,6 +116,7 @@ int main()
 	// build and compile our shader program
 	// ------------------------------------
 	Shader modelShader(R"(resource\shader\model_lighting.vert)", R"(resource\shader\model_lighting.frag)");
+	Shader planeShader(R"(resource\shader\plane.vert)", R"(resource\shader\plane.frag)");
 
 	// load models
 	// -----------
@@ -140,6 +138,34 @@ int main()
 
 	unsigned int cubemapTexture = skybox.cubemapTexture();
 
+	float plane_vertices[] = {
+		 2.0f,  0.0f,  -2.0f, 0.0f, 1.0f, 0.0f,
+		-2.0f, 0.0f,  2.0f,  0.0f, 1.0f, 0.0f,
+		 2.0f,  0.0f,  2.0f,  0.0f, 1.0f, 0.0f,
+
+		-2.0f, 0.0f,  -2.0f, 0.0f, 1.0f, 0.0f,
+		-2.0f, 0.0f,  2.0f,  0.0f, 1.0f, 0.0f,
+		2.0f,  0.0f,  -2.0f, 0.0f, 1.0f, 0.0f,
+
+	};
+
+	unsigned int planeVAO, planeVBO;
+	glGenVertexArrays(1, &planeVAO);
+	glGenBuffers(1, &planeVBO);
+
+	glBindVertexArray(planeVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(plane_vertices), plane_vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+
 	// uniform buffer
 	unsigned int uboTransformMatrices;
 	glGenBuffers(1, &uboTransformMatrices);
@@ -152,8 +178,10 @@ int main()
 	// --------------------
 	modelShader.use();
 	modelShader.setInt("skybox", 10);
-	modelShader.setVec3("viewPos", camera.Position);
 	modelShader.setFloat("material.shininess", 64.0f);
+
+	planeShader.use();
+	planeShader.setInt("skybox", 10);
 
 	Cactus::CactusEngine* engine = new Cactus::CactusEngine();
 
@@ -164,18 +192,6 @@ int main()
 		// per-frame time logic
 		// --------------------
 		deltaTime = engine->calculateDeltaTime();
-
-		// Start the Dear ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-		if (show_demo_window)
-			ImGui::ShowDemoWindow(&show_demo_window);
-
-		// Rendering
-		ImGui::Render();
 
 		// show fps in window title 
 		showFPS(window);
@@ -214,11 +230,11 @@ int main()
 		nanosuit.Draw(modelShader);
 
 		// draw zelda
-		model = glm::mat4(1.0f);		
+		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(zelda.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
-		
+
 		zelda.Draw(modelShader);
 
 		// draw nahida
@@ -235,15 +251,25 @@ int main()
 		model = glm::scale(model, glm::vec3(creeper.getScalingZ()));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
-		
+
 		creeper.Draw(modelShader);
-	
+
 		// draw skybox
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-		
+
 		skybox.draw(projection, view);
 
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		planeShader.use();
+		glActiveTexture(GL_TEXTURE10);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+
+		planeShader.setVec3("viewPos", camera.Position);
+		model = glm::mat4(1.0f);
+		planeShader.setMat4("model", model);
+		glBindVertexArray(planeVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -272,7 +298,7 @@ inline void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -348,9 +374,9 @@ inline void showFPS(GLFWwindow* pWindow)
 	}
 }
 
-inline void loadConfiguration(const std::string &json_path)
-{
-	std::ifstream is("rendering.global.json");
-	json j;
-	i >> j;
-}
+//inline void loadConfiguration(const std::string &json_path)
+//{
+//	std::ifstream is("rendering.global.json");
+//	json j;
+//	i >> j;
+//}
