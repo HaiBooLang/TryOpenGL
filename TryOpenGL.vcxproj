@@ -418,6 +418,7 @@
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\monitor.h" />
+    <ClInclude Include="include\overlay.h" />
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\skybox.h" />
   </ItemGroup>

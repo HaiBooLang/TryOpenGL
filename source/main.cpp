@@ -14,6 +14,8 @@
 #include <model.h>
 #include <camera.h>
 #include <skybox.h>
+#include <console.h>
+#include <overlay.h>
 
 #include <Windows.h>
 #include <iostream>
@@ -176,7 +178,8 @@ int CALLBACK WinMain(
 	// ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
 	// ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
 
-
+	bool show_app_console = false;
+	bool show_app_overlay = false;
 
 	// render loop
 	// -----------
@@ -197,9 +200,10 @@ int CALLBACK WinMain(
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		// ImGui::Begin("Panel", &is_open);
-
-		ImGui::ShowDemoWindow();
+		if (show_app_console)
+			ShowAppConsole(&show_app_console);
+		if (show_app_overlay)
+			ShowAppOverlay(&show_app_overlay);
 
 		// ImGui Rendering
 		ImGui::Render();
@@ -217,7 +221,11 @@ int CALLBACK WinMain(
 				glfwSetCursorPosCallback(window, NULL);
 				io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 				io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
-				glfwSetCursorPos(window, SCR_WIDTH / 2.0f, SCR_HEIGHT / 2.0f);
+				ImVec2 mouse_pos = ImGui::GetMousePos();
+				bool is_valid = !isnan(mouse_pos.x) && !isnan(mouse_pos.y);
+				if (is_valid)
+					glfwSetCursorPos(window, SCR_WIDTH / 2.0f, SCR_HEIGHT / 2.0f);
+				show_app_console = true;
 				mouse = false;
 			}
 		}
@@ -230,16 +238,25 @@ int CALLBACK WinMain(
 				glfwSetCursorPosCallback(window, mouse_callback);
 				io.ConfigFlags &= ~ImGuiConfigFlags_NavEnableKeyboard;
 				io.ConfigFlags &= ~ImGuiConfigFlags_NavEnableSetMousePos;
-				glfwSetCursorPos(window, SCR_WIDTH / 2.0f, SCR_HEIGHT / 2.0f);
+				ImVec2 mouse_pos = ImGui::GetMousePos();
+				bool is_valid = !isnan(mouse_pos.x) && !isnan(mouse_pos.y);
+				if (is_valid)
+					glfwSetCursorPos(window, SCR_WIDTH / 2.0f, SCR_HEIGHT / 2.0f);
+				show_app_console = false;
 				mouse = true;
 			}
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		{
+			show_app_overlay = !show_app_overlay;
 		}
 
 		// render
 		// ------
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
-		
+
 		// projection view model transformation matrices
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -254,7 +271,7 @@ int CALLBACK WinMain(
 
 		// don't forget to enable shader before setting uniforms
 		modelShader.use();
-		
+
 		glActiveTexture(GL_TEXTURE10);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
@@ -263,14 +280,14 @@ int CALLBACK WinMain(
 		nanosuit.Draw(modelShader);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		model = glm::mat4(1.0f);		
+		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		zelda.Draw(modelShader);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 		skybox.draw(projection, view);
 
@@ -305,7 +322,7 @@ inline void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)

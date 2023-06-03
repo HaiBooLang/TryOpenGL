@@ -401,3 +401,9 @@ FodyWeavers.xsd
 .idea
 
 *.ini
+
+enc_temp_folder/
+
+enc_temp_folder\
+
+
