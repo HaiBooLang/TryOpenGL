@@ -4,5 +4,6 @@
     "minor": 6
   },
   "transparent_framebuffer": true,
-  "multiple_sample": true
+  "multiple_sample": true,
+  "window_title": "HaiBooLang"
 }

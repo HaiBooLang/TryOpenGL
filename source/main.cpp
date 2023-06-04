@@ -57,7 +57,7 @@ int main()
 	if (status == -1)
 	{
 		std::cerr << "error\n";
-		// return -1;
+		return -1;
 	}
 
 	// glad: load all OpenGL function pointers
@@ -364,37 +364,45 @@ inline void showFPS(GLFWwindow* pWindow)
 
 inline GLFWwindow* loadGLFW(std::string path, int* status)
 {
-	std::ifstream file(path);
+	std::ifstream config_file(path);
+	GLFWwindow* window = nullptr;
 
-	if (!file.is_open())
+	if (!config_file.is_open())
 	{
-		std::cerr << "open file error£¡\n";
+		std::cerr << "ERROR::open file erro£¡\n";
 		*status = -1;
-		return nullptr;
+		return window;
 	}
 
-	nlohmann::json data = nlohmann::json::parse(file);
-	if (data.is_null())
+	nlohmann::json config;
+	try
 	{
-		std::cerr << "parse error£¡\n";
-		*status = -1;
-		return nullptr;
+		config_file >> config;
 	}
+	catch (nlohmann::json::parse_error& e)
+	{
+		std::cerr << "ERROR::JSON::" << e.what() << '\n';
+		*status = -1;
+		return window;
+	}
+
 
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, data["version"]["major"]);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, data["version"]["minor"]);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, config["version"]["major"]);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, config["version"]["minor"]);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	if (data["transparent_framebuffer"] == true)
+	if (config["transparent_framebuffer"] == true)
 		glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-	if (data["multiple_sample"] == true)
+	if (config["multiple_sample"] == true)
 		glfwWindowHint(GLFW_SAMPLES, 4);
+
+	std::string window_title = config["window_title"];
 
 	// glfw window creation
 	// --------------------  
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "HaiBooLang", nullptr, nullptr);
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_title.c_str(), nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
