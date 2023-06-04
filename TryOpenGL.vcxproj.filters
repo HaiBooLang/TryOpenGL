@@ -67,6 +67,9 @@
     <Filter Include="resource\shader\model\...ヽ%28 ´_つ｀%29ノ %3f">
       <UniqueIdentifier>{fdc27127-f369-4420-a61c-3209be865891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\nlohmann">
+      <UniqueIdentifier>{921eddfa-8e36-45ae-bc32-424db47b198c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1262,6 +1265,12 @@
     <ClInclude Include="external\imgui\imstb_truetype.h">
       <Filter>external\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="external\nlohmann\json.hpp">
+      <Filter>external\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="external\nlohmann\json_fwd.hpp">
+      <Filter>external\nlohmann</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\texture\awesomeface.png">
@@ -1917,5 +1926,8 @@
     <None Include="external\glm\gtx\wrap.inl">
       <Filter>external\glm</Filter>
     </None>
+    <None Include="rendering.global.json" />
+    <None Include="resource\shader\plane.frag" />
+    <None Include="resource\shader\plane.vert" />
   </ItemGroup>
 </Project>

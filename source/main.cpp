@@ -1,7 +1,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-// #include <nlohmann/json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,7 +15,6 @@
 #include <model.h>
 #include <camera.h>
 #include <skybox.h>
-#include <engine.h>
 
 #include <Windows.h>
 #include <iostream>
@@ -23,6 +22,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void processInput(GLFWwindow* window);
 void showFPS(GLFWwindow* pWindow);
 
@@ -46,8 +46,6 @@ float lastTime = 0.0f;
 
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-
-const float Cactus::CactusEngine::s_fps_alpha = 1.f / 100;
 
 int main()
 {
@@ -183,15 +181,15 @@ int main()
 	planeShader.use();
 	planeShader.setInt("skybox", 10);
 
-	Cactus::CactusEngine* engine = new Cactus::CactusEngine();
-
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
 		// per-frame time logic
 		// --------------------
-		deltaTime = engine->calculateDeltaTime();
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
 		// show fps in window title 
 		showFPS(window);
@@ -351,6 +349,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+
 
 inline void showFPS(GLFWwindow* pWindow)
 {

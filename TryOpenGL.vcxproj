@@ -412,9 +412,10 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="external\nlohmann\json.hpp" />
+    <ClInclude Include="external\nlohmann\json_fwd.hpp" />
     <ClInclude Include="external\stb_image.h" />
     <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\engine.h" />
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shader.h" />
