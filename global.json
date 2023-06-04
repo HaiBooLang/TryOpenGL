@@ -1,0 +1,8 @@
+{
+  "version": {
+    "major": 4,
+    "minor": 6
+  },
+  "transparent_framebuffer": true,
+  "multiple_sample": true
+}

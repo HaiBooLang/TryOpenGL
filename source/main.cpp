@@ -47,35 +47,18 @@ float lastTime = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+
+GLFWwindow* loadGLFW(std::string path, int* status);
+
 int main()
 {
-	// glfw: initialize and configure
-	// ------------------------------
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-	glfwWindowHint(GLFW_SAMPLES, 4);
-
-	// glfw window creation
-	// --------------------  
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "HaiBooLang", nullptr, nullptr);
-	if (window == nullptr)
+	int status = 0;
+	GLFWwindow* window = loadGLFW(R"(global.json)", &status);
+	if (status == -1)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return -1;
+		std::cerr << "error\n";
+		// return -1;
 	}
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-	glfwSwapInterval(0);
-	// glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
-
-	// tell GLFW to capture our mouse
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -379,9 +362,54 @@ inline void showFPS(GLFWwindow* pWindow)
 	}
 }
 
-//inline void loadConfiguration(const std::string &json_path)
-//{
-//	std::ifstream is("rendering.global.json");
-//	json j;
-//	i >> j;
-//}
+inline GLFWwindow* loadGLFW(std::string path, int* status)
+{
+	std::ifstream file(path);
+
+	if (!file.is_open())
+	{
+		std::cerr << "open file error£¡\n";
+		*status = -1;
+		return nullptr;
+	}
+
+	nlohmann::json data = nlohmann::json::parse(file);
+	if (data.is_null())
+	{
+		std::cerr << "parse error£¡\n";
+		*status = -1;
+		return nullptr;
+	}
+
+	// glfw: initialize and configure
+	// ------------------------------
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, data["version"]["major"]);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, data["version"]["minor"]);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	if (data["transparent_framebuffer"] == true)
+		glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+	if (data["multiple_sample"] == true)
+		glfwWindowHint(GLFW_SAMPLES, 4);
+
+	// glfw window creation
+	// --------------------  
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "HaiBooLang", nullptr, nullptr);
+	if (window == nullptr)
+	{
+		std::cout << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
+		*status = -1;
+	}
+
+	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glfwSwapInterval(0);
+	// glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+
+	// tell GLFW to capture our mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	return window;
+}

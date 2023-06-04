@@ -625,7 +625,7 @@
     <None Include="external\glm\gtx\vector_angle.inl" />
     <None Include="external\glm\gtx\vector_query.inl" />
     <None Include="external\glm\gtx\wrap.inl" />
-    <None Include="rendering.global.json" />
+    <None Include="global.json" />
     <None Include="resource\model\nanosuit\nanosuit.mtl" />
     <None Include="resource\model\zelda\Zelda.dae" />
     <None Include="resource\shader\light_cube.frag" />

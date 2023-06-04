@@ -70,6 +70,12 @@
     <Filter Include="external\nlohmann">
       <UniqueIdentifier>{921eddfa-8e36-45ae-bc32-424db47b198c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource\shader\plane">
+      <UniqueIdentifier>{650abcc4-f644-4c20-b73d-5019481303be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="configuration">
+      <UniqueIdentifier>{be300a6c-0cc3-40c6-a690-0ed4eb64ed95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -1926,8 +1932,14 @@
     <None Include="external\glm\gtx\wrap.inl">
       <Filter>external\glm</Filter>
     </None>
-    <None Include="rendering.global.json" />
-    <None Include="resource\shader\plane.frag" />
-    <None Include="resource\shader\plane.vert" />
+    <None Include="resource\shader\plane.vert">
+      <Filter>resource\shader\plane</Filter>
+    </None>
+    <None Include="resource\shader\plane.frag">
+      <Filter>resource\shader\plane</Filter>
+    </None>
+    <None Include="global.json">
+      <Filter>configuration</Filter>
+    </None>
   </ItemGroup>
 </Project>
