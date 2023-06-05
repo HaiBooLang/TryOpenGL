@@ -44,13 +44,26 @@
 
 - [Tiny Planet Clouds (shadertoy.com)](https://www.shadertoy.com/view/ldyXRw)
 
-### Unity C#
+---
+
+### Game Engine
+
+- [id-Software/Quake: Quake GPL Source Release](https://github.com/id-Software/Quake)
+
+#### Unity C#
 
 - [Catlike](https://catlikecoding.com/unity/tutorials/)
 
-### UE5
+#### UE5
 
 - [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
+
+---
+
+### Renderer
+
+- [Home · ssloy/tinyrenderer](https://github.com/ssloy/tinyrenderer/wiki)
+- [Raytracing in One Weekend](https://github.com/RayTracing/raytracing.github.io)
 
 ### Windows
 
@@ -62,13 +75,14 @@
 - [图解 | 回调函数](https://mp.weixin.qq.com/s/vOKJT1k3dhESwqBdncR-sQ)
 - [图解 | 同步与异步](https://mp.weixin.qq.com/s/xARtnqFQmi-Hzw01m__KQA)
 
+---
+
 ### Computer Graphics
 
 #### Games Webinar
 
 - [Games104](https://games104.boomingtech.com/sc/)
 - [Games101](http://games-cn.org/intro-graphics/)
-- [Raytracing in One Weekend](https://github.com/RayTracing/raytracing.github.io)
 
 #### GPU Graphics Pipeline
 
@@ -91,6 +105,15 @@
 
 - [Physics and Math of Shading](https://youtu.be/j-A0mwsJRmk)
 - [](https://youtu.be/_ZbkOZNgwNk)
+- [Moving Frostbite to PBR](https://www.ea.com/frostbite/news/moving-frostbite-to-pb)
+- [【基于物理的渲染（PBR）白皮书】（一） 开篇：PBR核心知识体系总结与概览](https://zhuanlan.zhihu.com/p/53086060)
+- [【基于物理的渲染（PBR）白皮书】（二） PBR核心理论与渲染光学原理总结](https://zhuanlan.zhihu.com/p/56967462)
+- [【基于物理的渲染（PBR）白皮书】（三）迪士尼原则的BRDF与BSDF相关总结](https://zhuanlan.zhihu.com/p/60977923)
+- [【基于物理的渲染（PBR）白皮书】（四）法线分布函数相关总结](https://zhuanlan.zhihu.com/p/69380665)
+- [【基于物理的渲染（PBR）白皮书】（五）几何函数相关总结](https://zhuanlan.zhihu.com/p/81708753)
+- [QianMo/Game-Programmer-Study-Notes](https://github.com/QianMo/Game-Programmer-Study-Notes)
+
+---
 
 ### Engineering
 
@@ -107,11 +130,8 @@
 - [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)
 - [HDRI to CubeMap](https://matheowis.github.io/HDRI-to-CubeMap/)
 - [Poly Haven](https://polyhaven.com/)
-- [imgui consolo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
+- 
 
-# UE5
-
-- [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
 ### Other
 
 - [imgui demo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
