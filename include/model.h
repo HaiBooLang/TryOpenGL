@@ -52,16 +52,16 @@ public:
 	}
 
 	// draws the model, and thus all its meshes
-	void Draw(Shader& shader)
+	void render(Shader& shader)
 	{
 		for (const auto& mesh : meshes)
 			mesh.Draw(shader);
 	}
 
-	void DrawInstanced(Shader& shader, const unsigned int count)
+	void renderInstanced(Shader& shader, const unsigned int count)
 	{
 		for (const auto& mesh : meshes)
-			mesh.DrawInstanced(shader, count);
+			mesh.renderInstanced(shader, count);
 	}
 
 	float getScalingX()

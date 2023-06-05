@@ -106,7 +106,7 @@ public:
 		glActiveTexture(GL_TEXTURE0);
 	}
 
-	void DrawInstanced(Shader& shader, const unsigned int count) const
+	void renderInstanced(Shader& shader, const unsigned int count) const
 	{
 		// bind appropriate textures
 		unsigned int diffuseNr = 0;

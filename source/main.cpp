@@ -53,6 +53,7 @@ GLFWwindow* loadConfiguration(const std::string& path, int* status);
 int main()
 {
 	int status = 0;
+
 	GLFWwindow* window = loadConfiguration(R"(global.json)", &status);
 	if (status == -1)
 	{
@@ -76,8 +77,6 @@ int main()
 	ImGui_ImplOpenGL3_Init("#version 420");
 
 	// Our state
-	bool show_demo_window = true;
-	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// build and compile our shader program
@@ -194,7 +193,7 @@ int main()
 		model = glm::scale(model, glm::vec3(nanosuit.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
 
-		nanosuit.Draw(modelShader);
+		nanosuit.render(modelShader);
 
 		// draw zelda
 		model = glm::mat4(1.0f);
@@ -202,7 +201,7 @@ int main()
 		model = glm::scale(model, glm::vec3(zelda.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
 
-		zelda.Draw(modelShader);
+		zelda.render(modelShader);
 
 		// draw nahida
 		model = glm::mat4(1.0f);
@@ -210,7 +209,7 @@ int main()
 		model = glm::scale(model, glm::vec3(nahida.getScalingY()));	// it's a bit too big for our scene, so scale it down
 		modelShader.setMat4("model", model);
 
-		nahida.Draw(modelShader);
+		nahida.render(modelShader);
 
 		// draw creeper
 		model = glm::mat4(1.0f);
@@ -219,7 +218,7 @@ int main()
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 
-		creeper.Draw(modelShader);
+		creeper.render(modelShader);
 
 		// draw skybox
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
@@ -422,9 +421,9 @@ inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 	// -----------------------------
 	if (config["depth_test"] == true)
 		glEnable(GL_DEPTH_TEST);
-	if(config["cull_face"] == true)
+	if (config["cull_face"] == true)
 		glEnable(GL_CULL_FACE);
-	if(config["program_point_size"] == true)
+	if (config["program_point_size"] == true)
 		glEnable(GL_PROGRAM_POINT_SIZE);
 	return window;
 }
