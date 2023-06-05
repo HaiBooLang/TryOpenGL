@@ -13,17 +13,18 @@ layout(std140, binding = 0) uniform Matrices {
     mat4 view;
 };
 
-out vec2 TexCoords;
-out vec3 FragPos;
-out vec3 Normal;
-
+out VS_OUT {
+    vec3 FragPos;
+    vec3 Normal;
+    vec2 TexCoords;
+} vs_out;
 uniform mat4 model;
 
 void main()
 {
-    TexCoords = aTexCoords;
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+    vs_out.TexCoords = aTexCoords;
+    vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
+    vs_out.Normal = mat3(transpose(inverse(model))) * aNormal;
 
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 }

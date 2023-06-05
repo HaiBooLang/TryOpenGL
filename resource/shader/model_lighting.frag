@@ -12,9 +12,11 @@ struct Material {
     float shininess;
 }; 
 
-in vec2 TexCoords; 
-in vec3 Normal;
-in vec3 FragPos;
+in VS_OUT {
+    vec3 FragPos;
+    vec3 Normal;
+    vec2 TexCoords;
+} fs_in;
 
 uniform vec3 viewPos;
 uniform samplerCube skybox;
@@ -47,11 +49,11 @@ void main()
     vec3 diffuse = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < material.texture_diffuse_num; i++)
     {
-        diffuse += texture(material.texture_diffuse[i], TexCoords).rgb;
+        diffuse += texture(material.texture_diffuse[i], fs_in.TexCoords).rgb;
     }
 
-    vec3 I = normalize(FragPos - viewPos);
-    vec3 R = reflect(I, normalize(Normal));
+    vec3 I = normalize(fs_in.FragPos - viewPos);
+    vec3 R = reflect(I, normalize(fs_in.Normal));
 
     vec3 specular = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < material.texture_specular_num; i++)
@@ -66,15 +68,15 @@ void main()
         for(int i = 0; i < 9; i++)
             color += skyboxcolor[i] * kernel[i];
 
-        specular += color * texture(material.texture_specular[i], TexCoords).rgb;
+        specular += color * texture(material.texture_specular[i], fs_in.TexCoords).rgb;
     }
 
     vec3 reflection = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < material.texture_reflection_num; i++)
     {
-        float reflect_intensity = texture(material.texture_reflection[i], TexCoords).r;
+        float reflect_intensity = texture(material.texture_reflection[i], fs_in.TexCoords).r;
         if(reflect_intensity > 0.1) // Only sample reflections when above a certain treshold
-            reflection += texture(skybox, R).rgb * texture(material.texture_reflection[i], TexCoords).rgb;
+            reflection += texture(skybox, R).rgb * texture(material.texture_reflection[i], fs_in.TexCoords).rgb;
     }
 
     vec3 result = diffuse + specular * 0.4 + reflection * 0.6;
