@@ -48,31 +48,17 @@ float lastTime = 0.0f;
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 
-GLFWwindow* loadGLFW(std::string path, int* status);
+GLFWwindow* loadConfiguration(const std::string& path, int* status);
 
 int main()
 {
 	int status = 0;
-	GLFWwindow* window = loadGLFW(R"(global.json)", &status);
+	GLFWwindow* window = loadConfiguration(R"(global.json)", &status);
 	if (status == -1)
 	{
 		std::cerr << "error\n";
 		return -1;
 	}
-
-	// glad: load all OpenGL function pointers
-	// ---------------------------------------
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
-	// configure global opengl state
-	// -----------------------------
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -362,14 +348,14 @@ inline void showFPS(GLFWwindow* pWindow)
 	}
 }
 
-inline GLFWwindow* loadGLFW(std::string path, int* status)
+inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 {
 	std::ifstream config_file(path);
 	GLFWwindow* window = nullptr;
 
 	if (!config_file.is_open())
 	{
-		std::cerr << "ERROR::open file erro£¡\n";
+		std::cerr << "ERROR::open file error£¡\n";
 		*status = -1;
 		return window;
 	}
@@ -396,7 +382,7 @@ inline GLFWwindow* loadGLFW(std::string path, int* status)
 	if (config["transparent_framebuffer"] == true)
 		glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 	if (config["multiple_sample"] == true)
-		glfwWindowHint(GLFW_SAMPLES, 4);
+		glfwWindowHint(GLFW_SAMPLES, config["multiple_sample_level"]);
 
 	std::string window_title = config["window_title"];
 
@@ -405,19 +391,40 @@ inline GLFWwindow* loadGLFW(std::string path, int* status)
 	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_title.c_str(), nullptr, nullptr);
 	if (window == nullptr)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		std::cerr << "Failed to create GLFW window\n";
 		glfwTerminate();
 		*status = -1;
+		throw "ERROR::CREATE_GLFW_WINDOW";
 	}
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-	glfwSwapInterval(0);
-	// glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+	if (config["swap_interval"] == false)
+		glfwSwapInterval(0);
+	if (config["glfw_decorated"] == false)
+		glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// glad: load all OpenGL function pointers
+	// ---------------------------------------
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cerr << "Failed to initialize GLAD\n";
+		*status = -1;
+		throw "ERROR::INITIALIZE_GLAD";
+	}
+
+	// configure global opengl state
+	// -----------------------------
+	if (config["depth_test"] == true)
+		glEnable(GL_DEPTH_TEST);
+	if(config["cull_face"] == true)
+		glEnable(GL_CULL_FACE);
+	if(config["program_point_size"] == true)
+		glEnable(GL_PROGRAM_POINT_SIZE);
 	return window;
 }
