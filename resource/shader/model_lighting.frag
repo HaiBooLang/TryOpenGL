@@ -79,7 +79,8 @@ void main()
             reflection += texture(skybox, R).rgb * texture(material.texture_reflection[i], fs_in.TexCoords).rgb;
     }
 
-    vec3 result = diffuse + specular * 0.4 + reflection * 0.6;
+    vec3 result = diffuse + specular * 0.2 + reflection * 0.4;
     
-    FragColor = vec4(result, 1.0f);
+    float gamma = 2.2;
+    FragColor = vec4(pow(result, vec3(1.0/gamma)), 1.0f);
 }

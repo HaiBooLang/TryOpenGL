@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="external">
@@ -75,6 +75,9 @@
     </Filter>
     <Filter Include="configuration">
       <UniqueIdentifier>{be300a6c-0cc3-40c6-a690-0ed4eb64ed95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\shader\model\physically_based_rendering">
+      <UniqueIdentifier>{57b731a5-efba-490a-8ba7-26af931756a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1940,6 +1943,12 @@
     </None>
     <None Include="global.json">
       <Filter>configuration</Filter>
+    </None>
+    <None Include="resource\shader\pbr.frag">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
+    </None>
+    <None Include="resource\shader\pbr.vert">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
     </None>
   </ItemGroup>
 </Project>

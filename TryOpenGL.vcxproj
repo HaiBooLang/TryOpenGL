@@ -638,6 +638,8 @@
     <None Include="resource\shader\normal_visualization.frag" />
     <None Include="resource\shader\normal_visualization.geom" />
     <None Include="resource\shader\normal_visualization.vert" />
+    <None Include="resource\shader\pbr.frag" />
+    <None Include="resource\shader\pbr.vert" />
     <None Include="resource\shader\plane.frag" />
     <None Include="resource\shader\plane.vert" />
     <None Include="resource\shader\point_model.frag" />
