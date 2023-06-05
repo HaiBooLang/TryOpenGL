@@ -3,10 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <nlohmann/json.hpp>
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -61,24 +57,6 @@ int main()
 		return -1;
 	}
 
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	ImGui::StyleColorsLight();
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 420");
-
-	// Our state
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
 	// build and compile our shader program
 	// ------------------------------------
 	Shader modelShader(R"(resource\shader\model_lighting.vert)", R"(resource\shader\model_lighting.frag)");
@@ -88,8 +66,8 @@ int main()
 	// -----------
 	Model nanosuit(R"(resource\model\nanosuit\nanosuit.obj)");
 	Model zelda(R"(resource\model\zelda\Zelda.dae)");
-	Model nahida(R"(resource\model\nahida\nahida.pmx)");
-	Model creeper(R"(resource\model\\creeper\source\creeper.fbx)");
+	//Model nahida(R"(resource\model\nahida\nahida.pmx)");
+	//Model creeper(R"(resource\model\\creeper\source\creeper.fbx)");
 
 	vector<std::string> faces
 	{
@@ -203,22 +181,22 @@ int main()
 
 		zelda.render(modelShader);
 
-		// draw nahida
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(nahida.getScalingY()));	// it's a bit too big for our scene, so scale it down
-		modelShader.setMat4("model", model);
+		//// draw nahida
+		//model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(nahida.getScalingY()));	// it's a bit too big for our scene, so scale it down
+		//modelShader.setMat4("model", model);
 
-		nahida.render(modelShader);
+		//nahida.render(modelShader);
 
-		// draw creeper
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(creeper.getScalingZ()));	// it's a bit too big for our scene, so scale it down
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
-		modelShader.setMat4("model", model);
+		//// draw creeper
+		//model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(creeper.getScalingZ()));	// it's a bit too big for our scene, so scale it down
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
+		//modelShader.setMat4("model", model);
 
-		creeper.render(modelShader);
+		//creeper.render(modelShader);
 
 		// draw skybox
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
@@ -246,11 +224,6 @@ int main()
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
 	glDeleteBuffers(1, &uboTransformMatrices);
-
-	// Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
