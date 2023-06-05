@@ -327,7 +327,7 @@ inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 
 	if (!config_file.is_open())
 	{
-		std::cerr << "ERROR::open file error£¡\n";
+		std::cerr << "ERROR::open file errorï¼\n";
 		*status = -1;
 		return window;
 	}
