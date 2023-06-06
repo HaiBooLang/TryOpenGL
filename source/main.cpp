@@ -11,6 +11,7 @@
 #include <model.h>
 #include <camera.h>
 #include <skybox.h>
+#include <ibl.cpp>
 
 #include <Windows.h>
 #include <iostream>
@@ -56,34 +57,19 @@ int main()
 
 	// build and compile our shader program
 	// ------------------------------------
-	Shader shader(R"(resource\shader\pbr.vert)", R"(resource\shader\pbr.frag)");
+	Shader pbrShader(R"(resource\shader\pbr\pbr.vert)", R"(resource\shader\pbr\pbr.frag)");
 
-	// load models
-	// -----------
-	//Model nanosuit(R"(resource\model\nanosuit\nanosuit.obj)");
-	//Model zelda(R"(resource\model\zelda\Zelda.dae)");
-	//Model nahida(R"(resource\model\nahida\nahida.pmx)");
-	//Model creeper(R"(resource\model\\creeper\source\creeper.fbx)");
+	IBL ibl(R"(resource\hdr\vestibule.hdr)", 
+		R"(resource\shader\pbr\skybox.vert)",R"(resource\shader\pbr\skybox.frag)",
+		R"(resource\shader\pbr\equirectangular_to_cubemap.vert)", R"(resource\shader\pbr\equirectangular_to_cubemap.frag)");
 
-	vector<std::string> faces
-	{
-		R"(resource\texture\skybox\px.png)",
-		R"(resource\texture\skybox\nx.png)",
-		R"(resource\texture\skybox\py.png)",
-		R"(resource\texture\skybox\ny.png)",
-		R"(resource\texture\skybox\pz.png)",
-		R"(resource\texture\skybox\nz.png)"
-	};
-	Skybox skybox(faces, R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 
-	unsigned int cubemapTexture = skybox.cubemapTexture();
-
-	shader.use();
-	shader.setVec3("albedo", 0.5f, 0.0f, 0.0f);
-	shader.setFloat("ao", 1.0f);
+	pbrShader.use();
+	pbrShader.setVec3("albedo", 0.5f, 0.0f, 0.0f);
+	pbrShader.setFloat("ao", 1.0f);
 
 	// lights
-// ------
+	// ------
 	glm::vec3 lightPositions[] = {
 		glm::vec3(-10.0f,  10.0f, 10.0f),
 		glm::vec3(10.0f,  10.0f, 10.0f),
@@ -103,9 +89,15 @@ int main()
 	// initialize static shader uniforms before rendering
 	// --------------------------------------------------
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-	shader.use();
-	shader.setMat4("projection", projection);
+	pbrShader.use();
+	pbrShader.setMat4("projection", projection);
 
+	ibl.set_skybox_shader_projection(projection);
+
+	// then before rendering, configure the viewport to the original framebuffer's screen dimensions
+	int scrWidth, scrHeight;
+	glfwGetFramebufferSize(window, &scrWidth, &scrHeight);
+	glViewport(0, 0, scrWidth, scrHeight);
 
 	// render loop
 	// -----------
@@ -129,30 +121,30 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!		
 
-		shader.use();
+		pbrShader.use();
 		glm::mat4 view = camera.GetViewMatrix();
-		shader.setMat4("view", view);
-		shader.setVec3("camPos", camera.Position);
+		pbrShader.setMat4("view", view);
+		pbrShader.setVec3("camPos", camera.Position);
 
 		// render rows*column number of spheres with varying metallic/roughness values scaled by rows and columns respectively
 		glm::mat4 model = glm::mat4(1.0f);
 		for (int row = 0; row < nrRows; ++row)
 		{
-			shader.setFloat("metallic", (float)row / (float)nrRows);
+			pbrShader.setFloat("metallic", (float)row / (float)nrRows);
 			for (int col = 0; col < nrColumns; ++col)
 			{
-				// we clamp the roughness to 0.05 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
+				// we clamp the roughness to 0.025 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
 				// on direct lighting.
-				shader.setFloat("roughness", glm::clamp((float)col / (float)nrColumns, 0.05f, 1.0f));
+				pbrShader.setFloat("roughness", glm::clamp((float)col / (float)nrColumns, 0.05f, 1.0f));
 
 				model = glm::mat4(1.0f);
 				model = glm::translate(model, glm::vec3(
-					(col - (nrColumns / 2)) * spacing,
-					(row - (nrRows / 2)) * spacing,
-					0.0f
+					(float)(col - (nrColumns / 2)) * spacing,
+					(float)(row - (nrRows / 2)) * spacing,
+					-2.0f
 				));
-				shader.setMat4("model", model);
-				shader.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
+				pbrShader.setMat4("model", model);
+				pbrShader.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 				renderSphere();
 			}
 		}
@@ -164,16 +156,18 @@ int main()
 		{
 			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
 			newPos = lightPositions[i];
-			shader.setVec3("lightPositions[" + std::to_string(i) + "]", newPos);
-			shader.setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+			pbrShader.setVec3("lightPositions[" + std::to_string(i) + "]", newPos);
+			pbrShader.setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
 
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, newPos);
 			model = glm::scale(model, glm::vec3(0.5f));
-			shader.setMat4("model", model);
-			shader.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
+			pbrShader.setMat4("model", model);
+			pbrShader.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 			renderSphere();
 		}
+
+		ibl.render_skybox(view);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -354,6 +348,8 @@ inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 		glEnable(GL_CULL_FACE);
 	if (config["program_point_size"] == true)
 		glEnable(GL_PROGRAM_POINT_SIZE);
+
+	glDepthFunc(GL_LEQUAL);
 	return window;
 }
 

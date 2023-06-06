@@ -30,7 +30,9 @@
     <ClCompile Include="external\imgui\imgui_draw.cpp" />
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="source\ibl.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\assimp\include\assimp\aabb.h" />
@@ -416,6 +418,7 @@
     <ClInclude Include="external\nlohmann\json_fwd.hpp" />
     <ClInclude Include="external\stb_image.h" />
     <ClInclude Include="include\camera.h" />
+    <ClInclude Include="include\ibl.h" />
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shader.h" />
@@ -638,8 +641,12 @@
     <None Include="resource\shader\normal_visualization.frag" />
     <None Include="resource\shader\normal_visualization.geom" />
     <None Include="resource\shader\normal_visualization.vert" />
-    <None Include="resource\shader\pbr.frag" />
-    <None Include="resource\shader\pbr.vert" />
+    <None Include="resource\shader\pbr\equirectangular_to_cubemap.frag" />
+    <None Include="resource\shader\pbr\equirectangular_to_cubemap.vert" />
+    <None Include="resource\shader\pbr\pbr.frag" />
+    <None Include="resource\shader\pbr\pbr.vert" />
+    <None Include="resource\shader\pbr\skybox.frag" />
+    <None Include="resource\shader\pbr\skybox.vert" />
     <None Include="resource\shader\plane.frag" />
     <None Include="resource\shader\plane.vert" />
     <None Include="resource\shader\point_model.frag" />
@@ -700,12 +707,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.\external;.\external\imgui;.\external\glad\src;.\external\glad\include;.\external\glfw\include;.\external\imgui\backends;.\include;.\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>.\external;.\external\imgui;.\external\glad\src;.\external\glad\include;.\external\glfw\include;.\external\imgui\backends;.\include;.\external\assimp\include;.\source;$(IncludePath)</IncludePath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
     <LibraryPath>.\external;.\external\glfw\lib-vc2022;.\external\assimp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>.\external;.\external\imgui;.\external\glad\src;.\external\glad\include;.\external\glfw\include;.\external\imgui\backends;.\include;.\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>.\external;.\external\imgui;.\external\glad\src;.\external\glad\include;.\external\glfw\include;.\external\imgui\backends;.\include;.\external\assimp\include;.\source;$(IncludePath)</IncludePath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
     <LibraryPath>.\external;.\external\glfw\lib-vc2022;.\external\assimp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

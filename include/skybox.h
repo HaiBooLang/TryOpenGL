@@ -15,7 +15,7 @@ public:
 	Skybox(const std::vector<std::string>& faces, const char* vertexPath, const char* fragmentPath)
 		:faces(faces), shader(vertexPath, fragmentPath)
 	{
-		setupSkybox();
+		setupHDRI();
 	}
 
 	unsigned int cubemapTexture() const
@@ -40,7 +40,7 @@ public:
 		glDepthFunc(GL_LESS); // set depth function back to default;
 	}
 private:
-	void setupSkybox() {
+	void setupHDRI() {
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
 		glBindVertexArray(VAO);
@@ -56,7 +56,7 @@ private:
 #endif
 	}
 
-	void loadCubemap(const std::vector<std::string>& faces)
+	virtual void loadCubemap(const std::vector<std::string>& faces)
 	{
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
