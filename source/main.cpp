@@ -11,7 +11,7 @@
 #include <model.h>
 #include <camera.h>
 #include <skybox.h>
-#include <ibl.cpp>
+#include <ibl.h>
 
 #include <Windows.h>
 #include <iostream>
