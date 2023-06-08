@@ -3,16 +3,16 @@
     "major": 4,
     "minor": 6
   },
-   
+
   "transparent_framebuffer": true,
-  
+
   "multiple_sample": true,
   "multiple_sample_level": 4,
-  
+
   "window_title": "HaiBooLang",
   "swap_interval": false,
   "glfw_decorated": true,
-  
+
   "depth_test": true,
   "cull_face": true,
   "program_point_size": false

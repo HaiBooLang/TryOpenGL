@@ -30,7 +30,6 @@
     <ClCompile Include="external\imgui\imgui_draw.cpp" />
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="include\ibl.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\model.cpp" />
   </ItemGroup>

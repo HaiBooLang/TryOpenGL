@@ -59,10 +59,6 @@ int main()
 	// ------------------------------------
 	Shader pbrShader(R"(resource\shader\pbr\pbr.vert)", R"(resource\shader\pbr\pbr.frag)");
 
-	IBL ibl(R"(resource\hdr\vestibule.hdr)", 
-		R"(resource\shader\pbr\skybox.vert)",R"(resource\shader\pbr\skybox.frag)",
-		R"(resource\shader\pbr\equirectangular_to_cubemap.vert)", R"(resource\shader\pbr\equirectangular_to_cubemap.frag)");
-
 
 	pbrShader.use();
 	pbrShader.setVec3("albedo", 0.5f, 0.0f, 0.0f);
@@ -91,6 +87,11 @@ int main()
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	pbrShader.use();
 	pbrShader.setMat4("projection", projection);
+
+	IBL ibl(R"(resource\hdr\vestibule.hdr)",
+		R"(resource\shader\pbr\skybox.vert)", R"(resource\shader\pbr\skybox.frag)",
+		R"(resource\shader\pbr\equirectangular_to_cubemap.vert)", R"(resource\shader\pbr\equirectangular_to_cubemap.frag)");
+
 
 	ibl.set_skybox_shader_projection(projection);
 

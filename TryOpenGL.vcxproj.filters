@@ -40,12 +40,6 @@
     <Filter Include="resource\model\zelda">
       <UniqueIdentifier>{f00efde1-34ed-4eb6-83b1-144f3eb7c3cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\texture">
-      <UniqueIdentifier>{61d5229e-a0fa-44a0-b297-7767bcfbf107}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resource\texture\skybox">
-      <UniqueIdentifier>{1fb713f3-431b-4437-9fb2-b7f1f6e25096}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resource\shader">
       <UniqueIdentifier>{57ec71bd-1ca8-4769-8c1c-8eac898ca197}</UniqueIdentifier>
     </Filter>
@@ -78,6 +72,12 @@
     </Filter>
     <Filter Include="resource\shader\model\physically_based_rendering">
       <UniqueIdentifier>{57b731a5-efba-490a-8ba7-26af931756a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\shader\plane\texture">
+      <UniqueIdentifier>{61d5229e-a0fa-44a0-b297-7767bcfbf107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\shader\plane\texture\skybox">
+      <UniqueIdentifier>{1fb713f3-431b-4437-9fb2-b7f1f6e25096}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_widgets.cpp">
       <Filter>external\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\model.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1280,28 +1283,31 @@
     <ClInclude Include="external\nlohmann\json_fwd.hpp">
       <Filter>external\nlohmann</Filter>
     </ClInclude>
+    <ClInclude Include="include\ibl.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\texture\awesomeface.png">
-      <Filter>resource\texture</Filter>
+      <Filter>resource\shader\plane\texture</Filter>
     </Image>
     <Image Include="resource\texture\skybox\back.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\texture\skybox\bottom.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\texture\skybox\front.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\texture\skybox\left.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\texture\skybox\right.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\texture\skybox\top.jpg">
-      <Filter>resource\texture\skybox</Filter>
+      <Filter>resource\shader\plane\texture\skybox</Filter>
     </Image>
     <Image Include="resource\model\nanosuit\arm_dif.png">
       <Filter>resource\model\nanosuit</Filter>
@@ -1944,10 +1950,22 @@
     <None Include="global.json">
       <Filter>configuration</Filter>
     </None>
-    <None Include="resource\shader\pbr.frag">
+    <None Include="resource\shader\pbr\skybox.frag">
       <Filter>resource\shader\model\physically_based_rendering</Filter>
     </None>
-    <None Include="resource\shader\pbr.vert">
+    <None Include="resource\shader\pbr\equirectangular_to_cubemap.frag">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
+    </None>
+    <None Include="resource\shader\pbr\equirectangular_to_cubemap.vert">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
+    </None>
+    <None Include="resource\shader\pbr\pbr.frag">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
+    </None>
+    <None Include="resource\shader\pbr\pbr.vert">
+      <Filter>resource\shader\model\physically_based_rendering</Filter>
+    </None>
+    <None Include="resource\shader\pbr\skybox.vert">
       <Filter>resource\shader\model\physically_based_rendering</Filter>
     </None>
   </ItemGroup>
