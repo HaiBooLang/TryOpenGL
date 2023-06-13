@@ -44,26 +44,17 @@
 
 - [Tiny Planet Clouds (shadertoy.com)](https://www.shadertoy.com/view/ldyXRw)
 
----
-
-### Game Engine
-
-- [id-Software/Quake: Quake GPL Source Release](https://github.com/id-Software/Quake)
-
-#### Unity C#
+### Unity C#
 
 - [Catlike](https://catlikecoding.com/unity/tutorials/)
 
-#### UE5
+#### Ruby‘s Adventure
+
+- [Ruby‘s Adventure 学习笔记](https://blog.csdn.net/weixin_43734095/article/details/121645637)
+
+### UE5
 
 - [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
-
----
-
-### Renderer
-
-- [Home · ssloy/tinyrenderer](https://github.com/ssloy/tinyrenderer/wiki)
-- [Raytracing in One Weekend](https://github.com/RayTracing/raytracing.github.io)
 
 ### Windows
 
@@ -75,14 +66,13 @@
 - [图解 | 回调函数](https://mp.weixin.qq.com/s/vOKJT1k3dhESwqBdncR-sQ)
 - [图解 | 同步与异步](https://mp.weixin.qq.com/s/xARtnqFQmi-Hzw01m__KQA)
 
----
-
 ### Computer Graphics
 
 #### Games Webinar
 
 - [Games104](https://games104.boomingtech.com/sc/)
 - [Games101](http://games-cn.org/intro-graphics/)
+- [Raytracing in One Weekend](https://github.com/RayTracing/raytracing.github.io)
 
 #### GPU Graphics Pipeline
 
@@ -105,15 +95,6 @@
 
 - [Physics and Math of Shading](https://youtu.be/j-A0mwsJRmk)
 - [](https://youtu.be/_ZbkOZNgwNk)
-- [Moving Frostbite to PBR](https://www.ea.com/frostbite/news/moving-frostbite-to-pb)
-- [【基于物理的渲染（PBR）白皮书】（一） 开篇：PBR核心知识体系总结与概览](https://zhuanlan.zhihu.com/p/53086060)
-- [【基于物理的渲染（PBR）白皮书】（二） PBR核心理论与渲染光学原理总结](https://zhuanlan.zhihu.com/p/56967462)
-- [【基于物理的渲染（PBR）白皮书】（三）迪士尼原则的BRDF与BSDF相关总结](https://zhuanlan.zhihu.com/p/60977923)
-- [【基于物理的渲染（PBR）白皮书】（四）法线分布函数相关总结](https://zhuanlan.zhihu.com/p/69380665)
-- [【基于物理的渲染（PBR）白皮书】（五）几何函数相关总结](https://zhuanlan.zhihu.com/p/81708753)
-- [QianMo/Game-Programmer-Study-Notes](https://github.com/QianMo/Game-Programmer-Study-Notes)
-
----
 
 ### Engineering
 
@@ -130,8 +111,48 @@
 - [The Stanford 3D Scanning Repository](http://graphics.stanford.edu/data/3Dscanrep/)
 - [HDRI to CubeMap](https://matheowis.github.io/HDRI-to-CubeMap/)
 - [Poly Haven](https://polyhaven.com/)
-- 
+- [imgui consolo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
+
+# UE5
+
+- [剖析虚幻渲染体系（04）- 延迟渲染管线](https://www.cnblogs.com/timlly/p/14732412.html#4232-tiled-based-deferred-renderingtbdr)
 
 ### Other
 
 - [imgui demo](https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp#L6544)
+
+## tmp
+
+- [The basics of Painting with Maths - YouTube](https://www.youtube.com/watch?v=0ifChJ0nJfM)
+- [Quake](https://github.com/id-Software/Quake)
+- [Quake3e](https://github.com/ec-/Quake3e)
+- [图形学底层探秘 - 纹理采样、环绕、过滤与Mipmap的那些事](https://zhuanlan.zhihu.com/p/143377682)
+- [如何设计一张有“魂味”的地图？——论“类魂”游戏关卡的拓扑结构](https://www.bilibili.com/read/cv13396742)
+- [每个程序员都应该了解的内存知识（What every programmer should know about memory）](https://zhuanlan.zhihu.com/p/611133924)
+- [【明日方舟·同人反塔防游戏】斯卡蒂IF线《渊海异响》开发笔记](https://zhuanlan.zhihu.com/p/571131348)
+- [原子操作与内存模型/序/屏障 （Atomic operation & Memory model）](https://zhuanlan.zhihu.com/p/611868395)
+- [描述次表面散射：参与介质（Participating Media）、体绘制（Volume Rendering）、辐射传输方程（Radiative Transfer Equation）](https://zhuanlan.zhihu.com/p/508586030)
+- [Unity - Manual: Order of execution for event functions](https://docs.unity3d.com/Manual/ExecutionOrder.html?utm_source=demand-gen&utm_medium=pdf&utm_campaign=asset-links-gmg-choose-unity-for-mobile&utm_content=optimize-mobile-game-performance-ebook)
+- [Physically Based Rendering: From Theory to Implementation](https://pbr-book.org/3ed-2018/contents)
+- [一文搞懂cpu cache工作原理](https://zhuanlan.zhihu.com/p/593016449)
+- [Carnegie Mellon Computer Graphics](http://graphics.cs.cmu.edu/)
+- [自己动手实现一个malloc内存分配器](https://zhuanlan.zhihu.com/p/367060283)
+- [shadertoy 这个网站如何玩？](https://www.zhihu.com/question/22514128/answer/2488542877)
+- [GamebabyRockSun_QQ的博客](https://gamebaby.blog.csdn.net/?type=blog)
+- [blog/articles/git/git-tricks](https://github.com/bladeXue/blog/tree/master/articles/git/git-tricks)
+- [低差异序列（一）- 常见序列的定义及性质](https://zhuanlan.zhihu.com/p/20197323)
+- https://webglfundamentals.org/
+- [WebGL2 理论基础](https://webgl2fundamentals.org/webgl/lessons/zh_cn/)
+- [光线追踪渲染实战：蒙特卡洛路径追踪及其c++实现](https://blog.csdn.net/weixin_44176696/article/details/113418991)
+- [CUDA还能走多远？](https://www.zhihu.com/question/30597217/answer/3024851394)
+- [初探DirectX Raytracing](https://zhuanlan.zhihu.com/p/270397835)
+- [git reset --hard 操作后的数据恢复](https://www.cnblogs.com/dongcanliang/p/11162235.html)
+- [The basics of Painting with Maths](https://www.youtube.com/watch?app=desktop&v=0ifChJ0nJfM)
+- [Unity 项目 - Ruby‘s Adventure 学习笔记](https://blog.csdn.net/weixin_43734095/article/details/121645637)
+- [现代C++的内存模型](https://zhuanlan.zhihu.com/p/382372072)
+- [深度阅读：深入 C++ 内存管理](https://zhuanlan.zhihu.com/p/344377490)
+- [万字讲解你写的代码是如何跑起来的？](https://zhuanlan.zhihu.com/p/607142856)
+- [每周一篇 GDC —— 字体渲染技术（A Survey of Font Rendering Techniques）](https://zhuanlan.zhihu.com/p/610962562)
+- [Cpu设计之缓存---cache（深度讲解篇）](https://zhuanlan.zhihu.com/p/636322548)
+- [体积云实时渲染光照简单原理](https://zhuanlan.zhihu.com/p/629189750)
+- [由浅入深学习PBR的原理和实现](https://zhuanlan.zhihu.com/p/545848268)
