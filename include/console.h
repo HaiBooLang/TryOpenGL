@@ -6,11 +6,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-static void ShowAppConsole(bool* p_open);
-
-//-----------------------------------------------------------------------------
-// [SECTION] Example App: Debug Console / ShowExampleAppConsole()
-//-----------------------------------------------------------------------------
+//static void ShowAppConsole(bool* p_open);
 
 // Demonstrate creating a simple console window, with scrolling, filtering, completion and history.
 // For the console example, we are using a more C++ like approach of declaring a class to hold both data and functions.
@@ -247,6 +243,11 @@ struct AppConsole
 			for (int i = first > 0 ? first : 0; i < History.Size; i++)
 				AddLog("%3d: %s\n", i, History[i]);
 		}
+		// SUPRISE
+		else if (Stricmp(command_line, "HAPPY") == 0)
+		{
+			AddLog("%s", "Wishing you happiness every day too!");
+		}
 		else
 		{
 			AddLog("Unknown command: '%s'\n", command_line);
@@ -263,6 +264,7 @@ struct AppConsole
 		return console->TextEditCallback(data);
 	}
 
+	// Called whenever the user types into the console window, and it handles two types of input events: text completion and command history
 	int     TextEditCallback(ImGuiInputTextCallbackData* data)
 	{
 		//AddLog("cursor: %d, selection: %d-%d", data->CursorPos, data->SelectionStart, data->SelectionEnd);
@@ -365,11 +367,11 @@ struct AppConsole
 	}
 };
 
-static void ShowAppConsole(bool* p_open)
-{
-	static AppConsole console;
-	console.Draw("Console", p_open);
-}
+//static void ShowAppConsole(bool* p_open)
+//{
+//	static AppConsole console;
+//	console.Draw("Console", p_open);
+//}
 
 
 // Define a custom stream buffer that redirects output to AppConsole

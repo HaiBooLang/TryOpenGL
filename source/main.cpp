@@ -188,8 +188,6 @@ int CALLBACK WinMain(
 	AppConsoleStreamBuffer streamBuffer(&console);
 	std::streambuf* oldBuffer = std::cout.rdbuf(&streamBuffer);
 
-	int n = 0;
-
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -208,8 +206,6 @@ int CALLBACK WinMain(
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-
-		std::cout << n++ <<std::endl;
 
 		if (show_app_console)
 			console.Draw("console", &show_app_console);
