@@ -156,3 +156,6 @@
 - [Cpu设计之缓存---cache（深度讲解篇）](https://zhuanlan.zhihu.com/p/636322548)
 - [体积云实时渲染光照简单原理](https://zhuanlan.zhihu.com/p/629189750)
 - [由浅入深学习PBR的原理和实现](https://zhuanlan.zhihu.com/p/545848268)
+- [实时渲染器架构](https://alain.xyz/blog/realtime-renderer-architectures)
+- [stack.gl](http://stack.gl/)
+
