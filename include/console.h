@@ -370,3 +370,49 @@ static void ShowAppConsole(bool* p_open)
     static AppConsole console;
     console.Draw("Console", p_open);
 }
+
+
+// Define a custom stream buffer that redirects output to AppConsole
+class AppConsoleStreamBuffer : public std::streambuf
+{
+public:
+    AppConsoleStreamBuffer(AppConsole* console) 
+        : console_(console)
+    {
+        // Set the buffer size to 1024 characters
+        char* buffer = new char[1024];
+        setp(buffer, buffer + 1024);
+    }
+
+    virtual ~AppConsoleStreamBuffer()
+    {
+        sync();
+        delete[] pbase();
+    }
+
+    virtual int_type overflow(int_type c = traits_type::eof())
+    {
+        if (c != traits_type::eof())
+        {
+            // Append the character to the buffer
+            *pptr() = c;
+            pbump(1);
+        }
+        return sync() ? c : traits_type::eof();
+    }
+
+    virtual int sync()
+    {
+        // Output the buffer to the AppConsole
+        if (pbase() != pptr())
+        {
+            std::string str(pbase(), pptr());
+            console_->AddLog(str.c_str());
+            setp(pbase(), pbase() + 1024);
+        }
+        return 0;
+    }
+
+private:
+    AppConsole* console_;
+};

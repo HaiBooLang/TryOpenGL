@@ -180,6 +180,15 @@ int CALLBACK WinMain(
 
 	bool show_app_console = false;
 	bool show_app_overlay = false;
+	
+	// Initialize AppConsole
+	AppConsole console;
+
+	// Redirect std::cout to AppConsole
+	AppConsoleStreamBuffer streamBuffer(&console);
+	std::streambuf* oldBuffer = std::cout.rdbuf(&streamBuffer);
+
+	int n = 0;
 
 	// render loop
 	// -----------
@@ -200,8 +209,10 @@ int CALLBACK WinMain(
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+		std::cout << n++ <<std::endl;
+
 		if (show_app_console)
-			ShowAppConsole(&show_app_console);
+			console.Draw("console", &show_app_console);
 		if (show_app_overlay)
 			ShowAppOverlay(&show_app_overlay);
 
@@ -308,6 +319,8 @@ int CALLBACK WinMain(
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
+
+	// std::cout.rdbuf(oldBuffer);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
