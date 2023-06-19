@@ -44,18 +44,11 @@ float lastTime = 0.0f;
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 
-GLFWwindow* loadConfiguration(const std::string& path, int* status);
+inline GLFWwindow* initOpenGL(const std::string& path);
 
 int main()
 {
-	int status = 0;
-
-	GLFWwindow* window = loadConfiguration(R"(global.json)", &status);
-	if (status == -1)
-	{
-		std::cerr << "error\n";
-		return -1;
-	}
+	GLFWwindow* window = initOpenGL(R"(global.json)");
 
 	// build and compile our shader program
 	// ------------------------------------
@@ -72,11 +65,11 @@ int main()
 	vector<std::string> faces
 	{
 		R"(resource\texture\skybox\px.png)",
-		R"(resource\texture\skybox\nx.png)",
-		R"(resource\texture\skybox\py.png)",
-		R"(resource\texture\skybox\ny.png)",
-		R"(resource\texture\skybox\pz.png)",
-		R"(resource\texture\skybox\nz.png)"
+			R"(resource\texture\skybox\nx.png)",
+			R"(resource\texture\skybox\py.png)",
+			R"(resource\texture\skybox\ny.png)",
+			R"(resource\texture\skybox\pz.png)",
+			R"(resource\texture\skybox\nz.png)"
 	};
 	Skybox skybox(faces, R"(resource\shader\skybox.vert)", R"(resource\shader\skybox.frag)");
 
@@ -320,34 +313,37 @@ inline void showFPS(GLFWwindow* pWindow)
 	}
 }
 
-inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
+// Load a JSON configuration file and returns a nlohmann::json object
+inline nlohmann::json loadConfiguration(const std::string& filename)
 {
-	std::ifstream config_file(path);
-	GLFWwindow* window = nullptr;
-
-	if (!config_file.is_open())
-	{
-		std::cerr << "ERROR::open file error！\n";
-		*status = -1;
-		return window;
+	std::ifstream file(filename);
+	// Checks if the file was successfully opened
+	if (!file.is_open()) {
+		throw std::runtime_error("Failed to open file: " + filename);
 	}
 
 	nlohmann::json config;
-	try
-	{
-		config_file >> config;
+	// Parse the JSON data
+	try {
+		file >> config;
 	}
-	catch (nlohmann::json::parse_error& e)
-	{
-		std::cerr << "ERROR::JSON::" << e.what() << '\n';
-		*status = -1;
-		return window;
+	catch (const nlohmann::json::exception& e) {
+		throw std::runtime_error(std::string("Failed to parse JSON: ").append(e.what()));
 	}
 
+	return std::move(config);
+}
+
+inline GLFWwindow* initOpenGL(const std::string& path)
+{
+	GLFWwindow* window = nullptr;
+
+	nlohmann::json config = loadConfiguration(path);
 
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, config["version"]["major"]);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, config["version"]["minor"]);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -356,17 +352,13 @@ inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 	if (config["multiple_sample"] == true)
 		glfwWindowHint(GLFW_SAMPLES, config["multiple_sample_level"]);
 
-	std::string window_title = config["window_title"];
-
 	// glfw window creation
-	// --------------------  
-	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_title.c_str(), nullptr, nullptr);
+	// -------------------- 
+	std::string title = config["window_title"];
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, title.c_str(), nullptr, nullptr);
 	if (window == nullptr)
 	{
-		std::cerr << "Failed to create GLFW window\n";
-		glfwTerminate();
-		*status = -1;
-		throw "ERROR::CREATE_GLFW_WINDOW";
+		throw std::runtime_error("Failed to create GLFW window");
 	}
 
 	glfwMakeContextCurrent(window);
@@ -381,22 +373,19 @@ inline GLFWwindow* loadConfiguration(const std::string& path, int* status)
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	// glad: load all OpenGL function pointers
-	// ---------------------------------------
+	// GLAD: load all OpenGL function pointers
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cerr << "Failed to initialize GLAD\n";
-		*status = -1;
-		throw "ERROR::INITIALIZE_GLAD";
+		throw std::runtime_error("Failed to initialize GLAD");
 	}
 
-	// configure global opengl state
-	// -----------------------------
+	// Configure global opengl state
 	if (config["depth_test"] == true)
 		glEnable(GL_DEPTH_TEST);
 	if (config["cull_face"] == true)
 		glEnable(GL_CULL_FACE);
 	if (config["program_point_size"] == true)
 		glEnable(GL_PROGRAM_POINT_SIZE);
+
 	return window;
 }
